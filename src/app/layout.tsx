@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, DM_Serif_Display } from 'next/font/google'
+import { Inter, Sora } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -8,20 +8,20 @@ const inter = Inter({
   display: 'swap',
 })
 
-const dmSerifDisplay = DM_Serif_Display({
+const sora = Sora({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-heading',
+  weight: ['400', '600', '700', '800'],
+  variable: '--font-display',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Timón — Descubrí qué estudiar',
+  title: 'Timon — Elegir qué estudiar no debería ser tirar una moneda',
   description:
-    'Descubrí qué estudiar, dónde, cuánto cuesta y de qué vas a trabajar. Orientación vocacional profesional.',
+    'Conocete, descubrí qué carrera encaja con vos y dónde estudiarla. Sin tests, sin etiquetas, sin presión.',
   openGraph: {
-    title: 'Timón — Descubrí qué estudiar',
-    description: 'Orientación vocacional profesional para adolescentes y familias.',
+    title: 'Timon — Elegir qué estudiar no debería ser tirar una moneda',
+    description: 'Conocete, descubrí qué carrera encaja con vos y dónde estudiarla.',
     locale: 'es_AR',
     type: 'website',
   },
@@ -33,8 +33,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${dmSerifDisplay.variable} h-full antialiased`}>
-      <body className="font-sans min-h-full flex flex-col">{children}</body>
+    <html lang="es" className={`${inter.variable} ${sora.variable} h-full antialiased`} suppressHydrationWarning>
+      <body
+        className="font-sans min-h-full flex flex-col bg-[var(--color-bg)] text-[var(--color-text)]"
+        suppressHydrationWarning
+      >
+        {children}
+      </body>
     </html>
   )
 }

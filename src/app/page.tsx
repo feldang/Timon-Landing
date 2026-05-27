@@ -1,28 +1,52 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/landing/Navbar'
-import { HeroSplit } from '@/components/landing/HeroSplit'
-import { AudienceToggle } from '@/components/landing/AudienceToggle'
-import { ProblemSection } from '@/components/landing/ProblemSection'
-import { SolutionSection } from '@/components/landing/SolutionSection'
-import { DifferentiatorsSection } from '@/components/landing/DifferentiatorsSection'
-import { TestimonialsSection } from '@/components/landing/TestimonialsSection'
-import { FinalCTA } from '@/components/landing/FinalCTA'
+import { HeroUniversal } from '@/components/landing/HeroUniversal'
+import { EstudianteLanding } from '@/components/landing/EstudianteLanding'
+import { PadreLanding } from '@/components/landing/PadreLanding'
+import { Footer } from '@/components/landing/Footer'
+
+type Audience = 'universal' | 'estudiante' | 'padre'
 
 export default function Home() {
-  const [audience, setAudience] = useState<'estudiante' | 'padre'>('estudiante')
+  const [audience, setAudience] = useState<Audience>('universal')
+
+  const handleSelect = (a: 'estudiante' | 'padre') => {
+    setAudience(a)
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
+  const handleReset = () => {
+    setAudience('universal')
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
+  useEffect(() => {
+    document.title =
+      audience === 'estudiante'
+        ? 'Timon — Entenderte mejor antes de elegir'
+        : audience === 'padre'
+        ? 'Timon — Que la primera gran decisión no termine en un cambio de carrera'
+        : 'Timon — Elegir qué estudiar no debería ser tirar una moneda'
+  }, [audience])
 
   return (
-    <main>
-      <Navbar />
-      <HeroSplit />
-      <AudienceToggle audience={audience} setAudience={setAudience} />
-      <ProblemSection audience={audience} />
-      <SolutionSection audience={audience} />
-      <DifferentiatorsSection />
-      <TestimonialsSection />
-      <FinalCTA />
+    <main className="flex-1 flex flex-col bg-[var(--color-bg)]">
+      <Navbar
+        audience={audience}
+        onLogoClick={handleReset}
+        onSwitchAudience={handleSelect}
+        onBack={handleReset}
+      />
+
+      <div className="flex-1">
+        {audience === 'universal' && <HeroUniversal onSelect={handleSelect} />}
+        {audience === 'estudiante' && <EstudianteLanding onBack={handleReset} />}
+        {audience === 'padre' && <PadreLanding onBack={handleReset} />}
+      </div>
+
+      <Footer />
     </main>
   )
 }

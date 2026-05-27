@@ -1,54 +1,60 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
+import { Logo } from './Logo'
+import { ArrowLeft } from 'lucide-react'
 
-export function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
+type Props = {
+  audience: 'universal' | 'estudiante' | 'padre'
+  onLogoClick: () => void
+  onSwitchAudience: (a: 'estudiante' | 'padre') => void
+  onBack: () => void
+}
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
+export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Props) {
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/90 backdrop-blur-md border-b border-gray-200 py-3'
-          : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center">
-            <span className="text-white text-xs font-bold">T</span>
-          </div>
-          <span
-            className={`font-semibold text-lg transition-colors ${
-              scrolled ? 'text-gray-900' : 'text-white'
-            }`}
-          >
-            timón
-          </span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/85 backdrop-blur-xl border-b border-[var(--color-border-soft)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+          {audience !== 'universal' && (
+            <button
+              onClick={onBack}
+              aria-label="Volver al inicio"
+              className="inline-flex items-center justify-center w-9 h-9 sm:w-auto sm:h-auto sm:gap-1.5 sm:px-0 sm:py-0 rounded-full sm:rounded-none bg-[var(--color-bg-elev)] sm:bg-transparent border border-[var(--color-border-soft)] sm:border-0 sm:border-r sm:pr-3 text-sm text-[var(--color-text-muted)] hover:text-white transition-colors cursor-pointer shrink-0"
+            >
+              <ArrowLeft size={16} />
+              <span className="hidden sm:inline">Atrás</span>
+            </button>
+          )}
+          <Logo onClick={onLogoClick} variant="light" size="sm" className="sm:hidden" />
+          <Logo onClick={onLogoClick} variant="light" size="md" className="hidden sm:block" />
         </div>
-        <div className="flex items-center gap-4">
-          <span
-            className={`text-sm transition-colors hidden md:block ${
-              scrolled ? 'text-gray-600' : 'text-white/70'
-            }`}
+
+        <nav className="flex items-center gap-3 sm:gap-6 shrink-0">
+          {audience === 'estudiante' && (
+            <button
+              onClick={() => onSwitchAudience('padre')}
+              className="hidden sm:inline-flex text-sm text-[var(--color-text-muted)] hover:text-white transition-colors cursor-pointer"
+            >
+              ¿Sos padre o madre?
+            </button>
+          )}
+          {audience === 'padre' && (
+            <button
+              onClick={() => onSwitchAudience('estudiante')}
+              className="hidden sm:inline-flex text-sm text-[var(--color-text-muted)] hover:text-white transition-colors cursor-pointer"
+            >
+              ¿Sos estudiante?
+            </button>
+          )}
+
+          <a
+            href="#colegios"
+            className="text-xs sm:text-sm text-[var(--color-text-muted)] hover:text-white transition-colors whitespace-nowrap"
           >
-            Iniciar sesión
-          </span>
-          <Button
-            size="sm"
-            className="bg-violet-600 hover:bg-violet-700 text-white rounded-full px-5"
-          >
-            Empezar ahora
-          </Button>
-        </div>
+            Para colegios
+          </a>
+        </nav>
       </div>
-    </nav>
+    </header>
   )
 }
