@@ -6,6 +6,7 @@ import { HeroUniversal } from '@/components/landing/HeroUniversal'
 import { EstudianteLanding } from '@/components/landing/EstudianteLanding'
 import { PadreLanding } from '@/components/landing/PadreLanding'
 import { Footer } from '@/components/landing/Footer'
+import { ScrollProgress } from '@/components/landing/ScrollProgress'
 
 type Audience = 'universal' | 'estudiante' | 'padre'
 
@@ -25,14 +26,15 @@ export default function Home() {
   useEffect(() => {
     document.title =
       audience === 'estudiante'
-        ? 'Timon — Entenderte mejor antes de elegir'
+        ? 'Timon — El primer paso no es elegir. Es entenderte.'
         : audience === 'padre'
-        ? 'Timon — Que la primera gran decisión no termine en un cambio de carrera'
-        : 'Timon — Elegir qué estudiar no debería ser tirar una moneda'
+        ? 'Timon — Que salga de la nebulosa con un mapa propio'
+        : 'Timon — Claridad antes de elegir'
   }, [audience])
 
   return (
-    <main className="flex-1 flex flex-col bg-[var(--color-bg)]">
+    <main className="flex-1 flex flex-col bg-[var(--cream)] paper-grain">
+      <ScrollProgress />
       <Navbar
         audience={audience}
         onLogoClick={handleReset}

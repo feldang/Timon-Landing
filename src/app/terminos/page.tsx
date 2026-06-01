@@ -6,24 +6,30 @@ export const metadata = {
 
 export default function TerminosPage() {
   return (
-    <main className="min-h-screen bg-[var(--color-bg)] text-white">
+    <main className="min-h-screen bg-[var(--cream)] text-[var(--navy)] paper-grain">
       <div className="max-w-3xl mx-auto px-6 py-24">
         <Link
           href="/"
-          className="inline-flex items-center text-sm text-[var(--color-text-muted)] hover:text-white mb-12"
+          className="inline-flex items-center text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors mb-12"
         >
           ← Volver
         </Link>
+        <p className="eyebrow eyebrow--with-rule mb-7">Documento legal</p>
         <h1
-          className="font-display font-extrabold text-4xl sm:text-5xl text-white mb-4 tracking-tight"
-          style={{ letterSpacing: '-0.035em' }}
+          className="font-display font-light text-[var(--navy)] mb-4"
+          style={{
+            fontSize: 'clamp(2.25rem, 5vw, 3.5rem)',
+            lineHeight: 1.0,
+            letterSpacing: '-0.035em',
+            fontVariationSettings: "'opsz' 144, 'SOFT' 80",
+          }}
         >
-          Términos y Condiciones
+          Términos <em className="italic-emphasis">y</em> condiciones
         </h1>
-        <p className="text-[var(--color-text-muted)] mb-12">
-          Próximamente — borrador en revisión legal.
+        <p className="text-[var(--hueso)] mb-12 font-mono text-[11px] uppercase tracking-[0.14em]">
+          Próximamente · borrador en revisión legal
         </p>
-        <div className="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
+        <div className="space-y-5 text-[var(--navy)]/85 text-[1.0625rem] leading-[1.7]">
           <p>
             Timon es una herramienta tecnológica de exploración vocacional. Sus respuestas son
             generadas por inteligencia artificial con fines informativos y de autoconocimiento.

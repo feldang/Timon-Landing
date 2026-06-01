@@ -12,28 +12,39 @@ type Props = {
 
 export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Props) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/85 backdrop-blur-xl border-b border-[var(--color-border-soft)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+    <header
+      className="sticky top-0 left-0 right-0 z-50 border-b border-[var(--border-cream)]"
+      style={{
+        background: 'rgba(245, 237, 224, 0.82)',
+        backdropFilter: 'blur(20px) saturate(1.2)',
+        WebkitBackdropFilter: 'blur(20px) saturate(1.2)',
+      }}
+    >
+      <div className="max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           {audience !== 'universal' && (
             <button
               onClick={onBack}
               aria-label="Volver al inicio"
-              className="inline-flex items-center justify-center w-9 h-9 sm:w-auto sm:h-auto sm:gap-1.5 sm:px-0 sm:py-0 rounded-full sm:rounded-none bg-[var(--color-bg-elev)] sm:bg-transparent border border-[var(--color-border-soft)] sm:border-0 sm:border-r sm:pr-3 text-sm text-[var(--color-text-muted)] hover:text-white transition-colors cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer pr-3 sm:border-r sm:border-[var(--border-cream)] shrink-0"
             >
-              <ArrowLeft size={16} />
-              <span className="hidden sm:inline">Atrás</span>
+              <ArrowLeft size={14} />
+              <span className="hidden sm:inline">Volver</span>
             </button>
           )}
-          <Logo onClick={onLogoClick} variant="light" size="sm" className="sm:hidden" />
-          <Logo onClick={onLogoClick} variant="light" size="md" className="hidden sm:block" />
+          <Logo onClick={onLogoClick} tone="navy" size={26} />
+          <span
+            className="hidden md:inline-flex items-center font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)] ml-1"
+          >
+            Claridad antes de elegir
+          </span>
         </div>
 
-        <nav className="flex items-center gap-3 sm:gap-6 shrink-0">
+        <nav className="flex items-center gap-4 sm:gap-7 shrink-0">
           {audience === 'estudiante' && (
             <button
               onClick={() => onSwitchAudience('padre')}
-              className="hidden sm:inline-flex text-sm text-[var(--color-text-muted)] hover:text-white transition-colors cursor-pointer"
+              className="hidden sm:inline-flex text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer"
             >
               ¿Sos padre o madre?
             </button>
@@ -41,15 +52,31 @@ export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Prop
           {audience === 'padre' && (
             <button
               onClick={() => onSwitchAudience('estudiante')}
-              className="hidden sm:inline-flex text-sm text-[var(--color-text-muted)] hover:text-white transition-colors cursor-pointer"
+              className="hidden sm:inline-flex text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer"
             >
               ¿Sos estudiante?
             </button>
           )}
+          {audience === 'universal' && (
+            <>
+              <button
+                onClick={() => onSwitchAudience('estudiante')}
+                className="hidden sm:inline-flex text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer"
+              >
+                Para estudiantes
+              </button>
+              <button
+                onClick={() => onSwitchAudience('padre')}
+                className="hidden sm:inline-flex text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer"
+              >
+                Para familias
+              </button>
+            </>
+          )}
 
           <a
             href="#colegios"
-            className="text-xs sm:text-sm text-[var(--color-text-muted)] hover:text-white transition-colors whitespace-nowrap"
+            className="text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors whitespace-nowrap"
           >
             Para colegios
           </a>

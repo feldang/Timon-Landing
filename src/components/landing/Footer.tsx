@@ -2,20 +2,31 @@ import { Logo } from './Logo'
 
 export function Footer() {
   return (
-    <footer className="bg-[var(--color-bg)] border-t border-[var(--color-border-soft)]">
-      <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <Logo variant="light" size="sm" />
-          <span className="text-sm text-[var(--color-text-dim)]">
-            © {new Date().getFullYear()}
+    <footer className="bg-[var(--cream-deep)] border-t border-[var(--border-cream)]">
+      <div className="max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-3">
+        {/* Brand */}
+        <div className="flex items-center gap-3 min-w-0 shrink-0">
+          <Logo tone="navy" size={26} />
+          <span className="hidden md:inline font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)] ml-1">
+            Claridad antes de elegir
           </span>
         </div>
 
-        <nav className="flex items-center gap-6 text-sm text-[var(--color-text-muted)]">
-          <a href="/terminos" className="hover:text-white transition-colors">
-            Términos y Condiciones
-          </a>
+        {/* Links */}
+        <nav className="hidden md:flex items-center gap-6 text-[13px] text-[var(--hueso)]">
+          <a href="#" className="hover:text-[var(--navy)] transition-colors">Estudiantes</a>
+          <a href="#" className="hover:text-[var(--navy)] transition-colors">Familias</a>
+          <a href="#colegios" className="hover:text-[var(--navy)] transition-colors">Colegios</a>
+          <a href="/terminos" className="hover:text-[var(--navy)] transition-colors">Términos</a>
+          <a href="mailto:hola@timon.com.ar" className="hover:text-[var(--navy)] transition-colors">Contacto</a>
         </nav>
+
+        {/* Legal */}
+        <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)] shrink-0">
+          <span>© {new Date().getFullYear()} Timon</span>
+          <span className="text-[var(--terra)]">⌖</span>
+          <span className="hidden sm:inline">Hecho en Argentina</span>
+        </div>
       </div>
     </footer>
   )

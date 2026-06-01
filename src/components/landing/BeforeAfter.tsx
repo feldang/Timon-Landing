@@ -1,81 +1,133 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
+import { WheelMark } from './Logo'
 
 type Pair = { before: string; after: string }
 
 type Props = {
   eyebrow: string
   title: string
+  titleEm?: string
   beforeLabel?: string
   afterLabel?: string
   pairs: Pair[]
 }
 
+/**
+ * Two-column shift composition with stronger visual contrast.
+ * Left column: cream-deep, muted, italic Fraunces — "el antes".
+ * Right column: cream-elev with ocean accent, bold IBM Plex — "el después".
+ * Center column on desktop: a vertical thread with ⌖ markers
+ * tying each pair across the gutter.
+ */
 export function BeforeAfter({
   eyebrow,
   title,
+  titleEm,
   beforeLabel = 'Hoy',
   afterLabel = 'Con Timon',
   pairs,
 }: Props) {
   return (
-    <section className="py-20 sm:py-32 bg-[var(--color-bg-elev)] border-y border-[var(--color-border-soft)] relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[300px] sm:h-[400px] bg-[var(--color-blue)]/8 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
+    <section className="relative py-20 sm:py-28 border-y border-[var(--border-cream)] bg-[var(--cream-elev)] overflow-hidden">
+      {/* Decorative editorial halo */}
+      <div
+        className="absolute pointer-events-none ocean-orb"
+        style={{ top: '20%', right: '-10%', width: 600, height: 600 }}
+      />
 
-      <div className="relative max-w-6xl mx-auto px-5 sm:px-6">
-        <div className="mb-12 sm:mb-16 max-w-3xl">
-          <p className="text-sm font-medium text-[var(--color-blue-bright)] uppercase tracking-wider mb-3">
-            {eyebrow}
-          </p>
+      <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="mb-12 sm:mb-16 max-w-[920px]">
+          <p className="eyebrow eyebrow--with-rule mb-7">{eyebrow}</p>
           <h2
-            className="font-display font-extrabold text-white text-[1.75rem] sm:text-4xl md:text-5xl leading-[1.1] tracking-tight"
-            style={{ letterSpacing: '-0.03em' }}
+            className="font-display font-light text-[var(--navy)]"
+            style={{
+              fontSize: 'clamp(2rem, 5vw, 4rem)',
+              lineHeight: 1.02,
+              letterSpacing: '-0.035em',
+              fontVariationSettings: "'opsz' 144, 'SOFT' 80",
+            }}
           >
-            {title}
+            {title}{' '}
+            {titleEm && (
+              <em
+                className="italic font-normal text-[var(--ocean)]"
+                style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 80" }}
+              >
+                {titleEm}
+              </em>
+            )}
           </h2>
         </div>
 
-        {/* Column headers (desktop) */}
-        <div className="hidden md:grid md:grid-cols-[1fr_56px_1fr] gap-4 mb-4 px-1">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-dim)]">
-            {beforeLabel}
-          </p>
+        {/* Column headers — visible on lg up */}
+        <div className="hidden lg:grid lg:grid-cols-[1fr_72px_1fr] gap-4 mb-6">
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--hueso)] font-semibold">
+              {beforeLabel}
+            </span>
+            <span className="flex-1 h-px bg-[var(--border-cream-strong)]" />
+          </div>
           <div />
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-blue-bright)]">
-            {afterLabel}
-          </p>
+          <div className="flex items-center gap-3">
+            <span className="flex-1 h-px bg-[var(--ocean)]/40" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--ocean)] font-semibold">
+              {afterLabel}
+            </span>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-3 sm:gap-3">
+        {/* Pairs */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_72px_1fr] gap-4 lg:gap-0">
+          {/* Mobile labels group + pair rendering */}
           {pairs.map((p, idx) => (
-            <div
-              key={idx}
-              className="grid grid-cols-1 md:grid-cols-[1fr_56px_1fr] gap-2 md:gap-4 items-stretch"
-            >
-              {/* Before */}
-              <div className="relative px-5 pt-8 pb-5 md:pt-5 md:py-5 rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border-soft)] flex items-center">
-                <span className="absolute top-3 left-5 md:hidden text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-dim)]">
+            <div key={idx} className="contents">
+              {/* BEFORE card */}
+              <div
+                className="relative rounded-2xl border border-dashed border-[var(--border-cream-strong)] bg-[var(--cream-deep)]/60 px-6 py-6 lg:py-7 lg:mb-3 transition-all hover:border-[var(--border-cream-strong)]"
+              >
+                <span className="lg:hidden font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--hueso)] block mb-2">
                   {beforeLabel}
                 </span>
-                <p className="text-[var(--color-text-muted)] text-base md:text-lg leading-snug">
+                <p
+                  className="font-display italic text-[var(--navy)]/55 leading-[1.35]"
+                  style={{
+                    fontWeight: 400,
+                    fontSize: '1.0625rem',
+                    letterSpacing: '-0.012em',
+                    fontVariationSettings: "'opsz' 72, 'SOFT' 80",
+                  }}
+                >
                   {p.before}
                 </p>
               </div>
 
-              {/* Arrow */}
-              <div className="flex items-center justify-center -my-1 md:my-0">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-[var(--color-blue)] to-[var(--color-blue-cornflower)] flex items-center justify-center shadow-lg shadow-[var(--color-blue)]/30 rotate-90 md:rotate-0">
-                  <ArrowRight size={16} className="text-white" />
+              {/* CENTER — visual thread with ⌖ marker */}
+              <div className="hidden lg:flex relative items-center justify-center lg:mb-3">
+                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-gradient-to-r from-[var(--border-cream-strong)] via-[var(--terra)]/40 to-[var(--ocean)]/40" />
+                <div
+                  className="relative z-10 w-10 h-10 rounded-full bg-[var(--cream-elev)] border border-[var(--border-cream)] flex items-center justify-center"
+                  style={{ boxShadow: '0 4px 12px rgba(15, 31, 54, 0.06)' }}
+                >
+                  <WheelMark tone="ocean" size={20} />
                 </div>
               </div>
 
-              {/* After */}
-              <div className="relative px-5 pt-8 pb-5 md:pt-5 md:py-5 rounded-2xl bg-gradient-to-br from-[var(--color-blue)]/10 to-[var(--color-blue-cornflower)]/5 border border-[var(--color-blue)]/30 flex items-center">
-                <span className="absolute top-3 left-5 md:hidden text-[10px] font-semibold uppercase tracking-wider text-[var(--color-blue-bright)]">
+              {/* AFTER card */}
+              <div
+                className="relative rounded-2xl bg-[var(--cream)] px-6 py-6 lg:py-7 lg:mb-3 border-l-[3px] border border-[var(--border-cream)] transition-all hover:border-[var(--ocean)]"
+                style={{ borderLeftColor: 'var(--ocean)' }}
+              >
+                <span className="lg:hidden font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--ocean)] block mb-2">
                   {afterLabel}
                 </span>
-                <p className="text-white text-base md:text-lg leading-snug font-medium">
+                <p
+                  className="text-[var(--navy)] font-medium leading-[1.4]"
+                  style={{
+                    fontSize: '1.0625rem',
+                    letterSpacing: '-0.005em',
+                  }}
+                >
                   {p.after}
                 </p>
               </div>
