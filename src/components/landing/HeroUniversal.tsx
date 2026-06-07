@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
 import { Marquee } from './Marquee'
-import { SectionMark } from './SectionMark'
 
 type Props = {
   onSelect: (a: 'estudiante' | 'padre') => void
@@ -23,86 +22,57 @@ export function HeroUniversal({ onSelect }: Props) {
   return (
     <section
       className="relative overflow-hidden flex flex-col"
-      style={{ minHeight: 'calc(100vh - 130px)' }}
+      style={{ minHeight: 'calc(100dvh - 128px)' }}
     >
-      <div className="absolute inset-0 editorial-grid editorial-grid-fade pointer-events-none" />
-      <div
-        className="absolute pointer-events-none ocean-orb"
-        style={{
-          top: '30%',
-          left: '50%',
-          width: 900,
-          height: 900,
-          transform: 'translate(-50%, -50%)',
-        }}
-      />
+      {/* layered background: brand mesh + quiet dot grid */}
+      <div className="absolute inset-0 hero-mesh pointer-events-none" />
+      <div className="absolute inset-0 dot-grid dot-grid-fade pointer-events-none" />
 
-      <div className="relative max-w-[1320px] mx-auto w-full px-5 sm:px-8 lg:px-12 pt-10 sm:pt-12 pb-4 sm:pb-6 flex-1 flex flex-col justify-center">
-        <SectionMark label="00" position="top-right" tone="terra" />
-
-        {/* Top: eyebrow + headline + subtitle */}
+      <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] pt-8 sm:pt-10 pb-3 sm:pb-4 flex-1 flex flex-col justify-center">
+        {/* Top: headline + subtitle */}
         <div
           ref={headline.ref}
-          className={`reveal ${headline.inView ? 'is-visible' : ''} max-w-[1100px]`}
+          className={`reveal ${headline.inView ? 'is-visible' : ''} max-w-[80%] xl:max-w-[75%] 2xl:max-w-[70%]`}
         >
-          <span
-            className="inline-flex items-center gap-2 text-[12px] font-medium text-[var(--navy)] mb-6 px-3.5 py-1.5 rounded-full"
-            style={{
-              background: 'rgba(201, 127, 94, 0.10)',
-              border: '1px solid rgba(201, 127, 94, 0.30)',
-              letterSpacing: '0.01em',
-            }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--terra)]" />
-            Orientación vocacional · Argentina
-          </span>
-
           <h1
             className="font-display font-light text-[var(--navy)] mb-6 sm:mb-8"
             style={{
-              fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+              fontSize: 'clamp(2.5rem, 6vw, 6.5rem)',
               lineHeight: 0.98,
               letterSpacing: '-0.04em',
               fontVariationSettings: "'opsz' 144, 'SOFT' 100",
             }}
           >
-            Elegir qué estudiar<br className="hidden sm:inline" />
-            {' '}no debería ser{' '}
+            Para definir qué{' '}
             <em
               className="italic font-normal text-[var(--ocean)]"
               style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 100" }}
             >
-              tirar una moneda
-            </em>
-            .
+              Carrera y Universidad
+            </em>{' '}
+            elegir.
           </h1>
 
           <p
             ref={sub.ref}
-            className={`reveal reveal-delay-2 ${sub.inView ? 'is-visible' : ''} text-[1rem] sm:text-[1.25rem] leading-[1.5] text-[var(--navy)]/80 max-w-[680px]`}
+            className={`reveal reveal-delay-2 ${sub.inView ? 'is-visible' : ''} text-[1.0625rem] sm:text-[1.25rem] xl:text-[1.375rem] leading-[1.55] text-[var(--navy)]/70 max-w-[640px] xl:max-w-[720px]`}
           >
-            Qué carreras tienen sentido con quién sos — y cómo es cada una en Argentina: universidades, costos y salidas laborales reales.
+            El escenario real: opciones compatibles detalladas, características de cursada, costos y el estado actual de cada profesión.
           </p>
         </div>
 
-        {/* "¿Quién sos?" — editorial divider that channels the eye to the fork */}
+        {/* "¿Quién sos?" — quiet mono label */}
         <div
           ref={divider.ref}
-          className={`reveal reveal-delay-3 ${divider.inView ? 'is-visible' : ''} flex items-center gap-6 my-7 sm:my-8`}
+          className={`reveal reveal-delay-3 ${divider.inView ? 'is-visible' : ''} flex items-center gap-4 mt-10 sm:mt-14 mb-6 sm:mb-8`}
           aria-hidden
         >
-          <span className="flex-1 h-px bg-gradient-to-r from-transparent via-[var(--border-cream-strong)] to-[var(--border-cream-strong)]" />
           <span
-            className="font-display italic font-light text-[var(--navy)]/70 whitespace-nowrap"
-            style={{
-              fontSize: 'clamp(1.25rem, 2vw, 1.75rem)',
-              letterSpacing: '-0.018em',
-              fontVariationSettings: "'opsz' 144, 'SOFT' 100",
-            }}
+            className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--hueso)]"
           >
             ¿Quién sos?
           </span>
-          <span className="flex-1 h-px bg-gradient-to-l from-transparent via-[var(--border-cream-strong)] to-[var(--border-cream-strong)]" />
+          <span className="flex-1 h-px bg-[var(--border-cream)]" />
         </div>
 
         {/* THE FORK — two equal cards, decision-grade */}

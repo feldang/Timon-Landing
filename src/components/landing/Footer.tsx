@@ -3,7 +3,7 @@ import { Logo } from './Logo'
 export function Footer() {
   return (
     <footer className="bg-[var(--cream-deep)] border-t border-[var(--border-cream)]">
-      <div className="max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-3">
+      <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] h-16 flex items-center justify-between gap-3">
         {/* Brand */}
         <div className="flex items-center gap-3 min-w-0 shrink-0">
           <Logo tone="navy" size={26} />

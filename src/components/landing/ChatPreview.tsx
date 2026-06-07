@@ -21,7 +21,7 @@ export function ChatPreview() {
           <div className="flex-1">
             <p className="font-sans font-semibold text-[var(--navy)] text-[14px] leading-tight">Timon</p>
             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--hueso)] mt-1">
-              Recorrido · pausado en cualquier momento
+              Recorrido pausable en cualquier momento
             </p>
           </div>
         </div>
@@ -30,35 +30,19 @@ export function ChatPreview() {
         <div className="px-5 py-6 flex flex-col gap-3 min-h-[320px] bg-[var(--cream)]">
           <div className="flex justify-start animate-fade-in-up">
             <div className="max-w-[88%] px-4 py-3 rounded-2xl rounded-tl-md bg-[var(--cream-elev)] border border-[var(--border-cream)] text-[var(--navy)] text-[14px] leading-[1.55]">
-              ¿Qué materias del cole te enganchan, aunque no sean en las que mejor te va?
+              Imaginate que tenés que tomar una decisión difícil en grupo. ¿Te da más seguridad basarte en números fríos o hablar con las personas para entender el contexto?
             </div>
           </div>
 
           <div className="flex justify-end animate-fade-in-up animate-delay-200">
             <div className="max-w-[88%] px-4 py-3 rounded-2xl rounded-tr-md bg-[var(--ocean)] text-[var(--cream-elev)] text-[14px] leading-[1.55]">
-              Historia y filosofía, pero no se me ocurre carrera con eso.
+              Números fríos, 100%. La gente te dice cualquier cosa, el dato no miente.
             </div>
           </div>
 
           <div className="flex justify-start animate-fade-in-up animate-delay-300">
             <div className="max-w-[88%] px-4 py-3 rounded-2xl rounded-tl-md bg-[var(--cream-elev)] border border-[var(--border-cream)] text-[var(--navy)] text-[14px] leading-[1.55]">
-              Hay <em className="italic-emphasis">muchas más</em> de las que pensás. ¿Te interesa más entender por qué pasan las cosas, o cómo cambiarlas?
-            </div>
-          </div>
-
-          <div className="flex justify-start animate-fade-in-up animate-delay-400">
-            <div className="px-4 py-3 rounded-2xl rounded-tl-md bg-[var(--cream-elev)] border border-[var(--border-cream)]">
-              <div className="flex gap-1.5 items-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-[var(--hueso)]/60 animate-bounce" />
-                <div
-                  className="w-1.5 h-1.5 rounded-full bg-[var(--hueso)]/60 animate-bounce"
-                  style={{ animationDelay: '150ms' }}
-                />
-                <div
-                  className="w-1.5 h-1.5 rounded-full bg-[var(--hueso)]/60 animate-bounce"
-                  style={{ animationDelay: '300ms' }}
-                />
-              </div>
+              Anotado. Lo agrego a tu <em className="italic-emphasis">modo de resolución</em>.
             </div>
           </div>
         </div>

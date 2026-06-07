@@ -158,6 +158,26 @@
   -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
 }
 
+/* ─── Dot grid — modern, quiet, on-brand ───────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(15, 31, 54, 0.11) 1.1px, transparent 1.3px);
+  background-size: 28px 28px;
+  background-position: 0 0;
+}
+
+.dot-grid-fade {
+  mask-image: radial-gradient(ellipse 75% 65% at 40% 50%, transparent 30%, black 85%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 40% 50%, transparent 30%, black 85%);
+}
+
+/* ─── Hero mesh — soft brand-color wash (ocean + terra) ────────────── */
+.hero-mesh {
+  background:
+    radial-gradient(900px 700px at 12% 18%, rgba(30, 91, 160, 0.10), transparent 60%),
+    radial-gradient(700px 600px at 88% 78%, rgba(201, 127, 94, 0.07), transparent 60%),
+    radial-gradient(500px 400px at 78% 12%, rgba(30, 91, 160, 0.05), transparent 60%);
+}
+
 /* Soft ocean orb for hero backgrounds */
 .ocean-orb {
   background: radial-gradient(circle, rgba(30, 91, 160, 0.10) 0%, transparent 60%);

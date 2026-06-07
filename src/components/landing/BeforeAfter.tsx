@@ -36,7 +36,7 @@ export function BeforeAfter({
         style={{ top: '20%', right: '-10%', width: 600, height: 600 }}
       />
 
-      <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw]">
         <div className="mb-12 sm:mb-16 max-w-[920px]">
           <p className="eyebrow eyebrow--with-rule mb-7">{eyebrow}</p>
           <h2

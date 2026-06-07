@@ -20,7 +20,7 @@ export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Prop
         WebkitBackdropFilter: 'blur(20px) saturate(1.2)',
       }}
     >
-      <div className="max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-3">
+      <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] h-16 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           {audience !== 'universal' && (
             <button

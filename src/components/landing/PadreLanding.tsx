@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, ArrowLeft } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { ReportPreview } from './ReportPreview'
 import { BeforeAfter } from './BeforeAfter'
 import { WheelMark } from './Logo'
@@ -50,22 +50,22 @@ const STATS: {
 const PROMISES = [
   {
     n: '01',
-    name: 'Disipar la nebulosa',
-    text: 'De "no sé qué quiero" a "sé quién soy". Punto de partida claro.',
+    name: 'El punto de partida',
+    text: 'De la incertidumbre a tener sus intereses y fricciones mapeados con claridad.',
   },
   {
     n: '02',
-    name: 'Abrir el universo de opciones',
-    text: 'Carreras nuevas, descritas con profundidad — para entender cada una de verdad.',
+    name: 'El universo de opciones',
+    text: 'Carreras nuevas, descritas con profundidad — para entender la realidad de cada una.',
   },
   {
     n: '03',
-    name: 'Distinguir las carreras que encajan',
+    name: 'Las opciones que se alinean',
     text: 'Argumentos concretos del fit con su perfil. Nunca etiquetas.',
   },
   {
     n: '04',
-    name: 'Aterrizar al mundo real argentino',
+    name: 'El mundo real argentino',
     text: 'Universidades, costos actualizados, salidas laborales y rangos salariales — cada dato verificable.',
   },
 ]
@@ -116,24 +116,35 @@ function PromiseCard({ item, idx }: { item: (typeof PROMISES)[number]; idx: numb
   return (
     <article
       ref={reveal.ref}
-      className={`reveal reveal-delay-${(idx % 2) + 1} ${reveal.inView ? 'is-visible' : ''} bg-[var(--cream)] p-10 sm:p-14 transition-colors hover:bg-[var(--cream-elev)]`}
+      className={`reveal reveal-delay-${(idx % 2) + 1} ${reveal.inView ? 'is-visible' : ''} group relative bg-[var(--cream)] p-12 sm:p-16 transition-colors hover:bg-[var(--cream-elev)]`}
     >
-      <p className="font-mono text-[11px] text-[var(--ocean)] uppercase tracking-[0.16em] font-semibold mb-5">
-        {item.n}
-      </p>
+      <div className="flex items-baseline gap-5 mb-6">
+        <span
+          className="font-display italic font-light text-[var(--ocean)]/70"
+          style={{
+            fontSize: '2.25rem',
+            lineHeight: 1,
+            letterSpacing: '-0.04em',
+            fontVariationSettings: "'opsz' 144, 'SOFT' 100",
+          }}
+        >
+          {item.n}
+        </span>
+        <span className="h-px flex-1 bg-[var(--border-cream-strong)] mb-2" />
+      </div>
       <h3
-        className="font-display text-[var(--navy)] mb-4"
+        className="font-display text-[var(--navy)] mb-5"
         style={{
-          fontWeight: 500,
-          fontSize: '1.625rem',
-          lineHeight: 1.15,
-          letterSpacing: '-0.02em',
+          fontWeight: 400,
+          fontSize: 'clamp(1.5rem, 2vw, 1.875rem)',
+          lineHeight: 1.1,
+          letterSpacing: '-0.025em',
           fontVariationSettings: "'opsz' 144, 'SOFT' 80",
         }}
       >
         {item.name}
       </h3>
-      <p className="text-[1rem] leading-[1.6] text-[var(--navy)]/85">{item.text}</p>
+      <p className="text-[1rem] sm:text-[1.0625rem] leading-[1.65] text-[var(--navy)]/75 max-w-[420px]">{item.text}</p>
     </article>
   )
 }
@@ -157,15 +168,7 @@ export function PadreLanding({ onBack }: Props) {
         />
         <SectionMark label="01" position="top-right" tone="ocean" />
 
-        <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 pt-10 pb-12 sm:pt-14 sm:pb-16">
-          <button
-            onClick={onBack}
-            className="inline-flex items-center gap-1.5 text-[13px] text-[var(--hueso)] hover:text-[var(--navy)] transition-colors cursor-pointer mb-6"
-          >
-            <ArrowLeft size={14} />
-            Volver al inicio
-          </button>
-
+        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] pt-10 pb-20 sm:pt-14 sm:pb-28">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-start">
             <div ref={heroLeft.ref} className={`reveal ${heroLeft.inView ? 'is-visible' : ''}`}>
               <span
@@ -176,31 +179,31 @@ export function PadreLanding({ onBack }: Props) {
                 }}
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--ocean)]" />
-                Para vos · padre o madre
+                Padre o madre
               </span>
 
               <h1
                 className="font-display font-light text-[var(--navy)] mb-6 sm:mb-8"
                 style={{
-                  fontSize: 'clamp(2.25rem, 5.5vw, 4.5rem)',
-                  lineHeight: 1.0,
+                  fontSize: 'clamp(2.25rem, 5.2vw, 4.25rem)',
+                  lineHeight: 0.98,
                   letterSpacing: '-0.04em',
                   fontVariationSettings: "'opsz' 144, 'SOFT' 100",
                 }}
               >
-                Que salga<br />
-                de la nebulosa<br />
-                con un mapa{' '}
+                Para identificar<br />
+                intereses reales<br />
+                y elegir qué estudiar{' '}
                 <em
                   className="italic font-normal text-[var(--ocean)]"
                   style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 100" }}
                 >
-                  propio.
+                  sin improvisar.
                 </em>
               </h1>
 
-              <p className="reveal reveal-delay-2 is-visible text-[1rem] sm:text-[1.25rem] leading-[1.55] text-[var(--navy)]/80 max-w-[600px] mb-8 sm:mb-10">
-                Tu hijo/a recorre Timon en privado. No necesitás entender de carreras, ni convencerlo, ni decidir por él/ella. El recorrido es suyo.
+              <p className="reveal reveal-delay-2 is-visible text-[1rem] sm:text-[1.25rem] leading-[1.55] text-[var(--navy)]/80 max-w-[560px] mb-8 sm:mb-10">
+                El fin del limbo. Le entregamos el escenario completo para avanzar con dirección.
               </p>
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-5">
@@ -211,11 +214,11 @@ export function PadreLanding({ onBack }: Props) {
                   className="group inline-flex items-center justify-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
                   style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
                 >
-                  Abrir el recorrido
+                  Dar acceso al recorrido
                   <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
                 </a>
                 <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--hueso)]">
-                  Privado · sin apuro
+                  Privado · a su propio ritmo
                 </p>
               </div>
             </div>
@@ -234,7 +237,7 @@ export function PadreLanding({ onBack }: Props) {
       <section className="relative bg-[var(--navy)] text-[var(--cream)] border-y border-[var(--navy-mid)] overflow-hidden">
         <SectionMark label="02" position="top-right" tone="cream" />
 
-        <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-28">
+        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-24 sm:py-32">
           <div
             ref={dataTitle.ref}
             className={`reveal ${dataTitle.inView ? 'is-visible' : ''} max-w-[920px] mb-12 sm:mb-16`}
@@ -252,12 +255,12 @@ export function PadreLanding({ onBack }: Props) {
                 fontVariationSettings: "'opsz' 144, 'SOFT' 80",
               }}
             >
-              El peso real de elegir{' '}
+              El costo de elegir{' '}
               <em
                 className="italic font-normal text-[var(--terra-soft)]"
                 style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 80" }}
               >
-                a ciegas.
+                sin información.
               </em>
             </h2>
             <p className="mt-7 text-[var(--cream)]/75 text-[1.0625rem] sm:text-[1.1875rem] leading-[1.55] max-w-[680px]">
@@ -280,7 +283,7 @@ export function PadreLanding({ onBack }: Props) {
       <section className="relative bg-[var(--cream)] overflow-hidden">
         <SectionMark label="03" position="bottom-left" tone="ocean" opacity={0.55} />
 
-        <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-28">
+        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-24 sm:py-32">
           <div
             ref={promisesTitle.ref}
             className={`reveal ${promisesTitle.inView ? 'is-visible' : ''} max-w-[920px] mb-12 sm:mb-16`}
@@ -316,15 +319,14 @@ export function PadreLanding({ onBack }: Props) {
       {/* ─── ANTES / DESPUÉS — JTBD shift padre ─── */}
       <BeforeAfter
         eyebrow="El cambio"
-        title="Lo que"
-        titleEm="sí va a pasar."
+        title="El impacto de la"
+        titleEm="información."
         beforeLabel="Sin Timon"
         afterLabel="Con Timon"
         pairs={[
           { before: 'Mi hijo queda en la nebulosa.', after: 'Sale con un mapa de opciones que entendió y comparó.' },
-          { before: 'Estudia 4 años algo que no termina de elegir.', after: 'Sabe qué le interesa antes de empezar.' },
-          { before: 'Elige apurado y a ciegas.', after: 'Decide con información antes de invertir 4 años y USD 30K.' },
-          { before: 'Inseguridad sobre la elección.', after: 'Está convencido/a de la carrera que eligió.' },
+          { before: 'Estudia años algo que no le convence.', after: 'Sabe de qué se trata su carrera antes de empezar.' },
+          { before: 'Elige apurado, a ciegas y por descarte.', after: 'Decide con el escenario completo antes de invertir 4 años y USD 30K.' },
         ]}
       />
 
@@ -332,12 +334,12 @@ export function PadreLanding({ onBack }: Props) {
       <section className="relative bg-[var(--cream-elev)] border-y border-[var(--border-cream)] overflow-hidden">
         <SectionMark label="05" position="top-right" tone="terra" opacity={0.6} />
 
-        <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-28">
+        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-24 sm:py-32">
           <div
             ref={rolBlock.ref}
             className={`reveal ${rolBlock.inView ? 'is-visible' : ''} max-w-[760px]`}
           >
-            <p className="eyebrow eyebrow--with-rule mb-7">Tu rol</p>
+            <p className="eyebrow eyebrow--with-rule mb-7">Tu rol en el proceso</p>
             <h2
               className="font-display font-light text-[var(--navy)] mb-10 sm:mb-12"
               style={{
@@ -347,12 +349,12 @@ export function PadreLanding({ onBack }: Props) {
                 fontVariationSettings: "'opsz' 144, 'SOFT' 80",
               }}
             >
-              Abrirle la puerta.{' '}
+              Facilitar la herramienta.{' '}
               <em
                 className="italic font-normal text-[var(--ocean)]"
                 style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 80" }}
               >
-                Nada más, nada menos.
+                Nada más.
               </em>
             </h2>
 
@@ -360,19 +362,15 @@ export function PadreLanding({ onBack }: Props) {
               {[
                 {
                   strong: 'Hacés posible que empiece.',
-                  rest: 'Eso solo, ya cambia las cosas.',
-                },
-                {
-                  strong: 'Si quiere, te comparte el resumen del recorrido.',
-                  rest: 'Lo van a revisar juntos, con información sobre la mesa.',
-                },
-                {
-                  strong: 'Si prefiere mantenerlo privado, también está bien.',
-                  rest: 'La decisión sigue siendo suya.',
+                  rest: 'Eso solo ya cambia las cosas.',
                 },
                 {
                   strong: 'Esperar sin invadir.',
-                  rest: 'El recorrido tiene su tiempo, y eso vale.',
+                  rest: 'El recorrido es privado y tiene su tiempo. La decisión sigue siendo suya.',
+                },
+                {
+                  strong: 'Información sobre la mesa.',
+                  rest: 'Si te comparte su resumen, van a revisarlo juntos con datos de oferta y costos, sin discutir en el aire.',
                 },
               ].map((line) => (
                 <li
@@ -400,17 +398,22 @@ export function PadreLanding({ onBack }: Props) {
       <section className="relative bg-[var(--cream)] overflow-hidden">
         <SectionMark label="06" position="bottom-right" tone="terra" />
 
-        <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-28 text-center">
-          <div className="flex justify-center mb-8">
-            <WheelMark tone="terra" size={56} className="spin-helm-slow" />
+        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-24 sm:py-32 text-center">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--hueso)] mb-8 inline-flex items-center gap-3 justify-center">
+            <span className="w-8 h-px bg-[var(--terra)]/60" />
+            Cierre
+            <span className="w-8 h-px bg-[var(--terra)]/60" />
+          </p>
+          <div className="flex justify-center mb-6">
+            <WheelMark tone="terra" size={48} className="spin-helm-slow" />
           </div>
           <h2
             ref={closing.ref}
-            className={`reveal ${closing.inView ? 'is-visible' : ''} font-display font-light italic text-[var(--navy)] mb-10`}
+            className={`reveal ${closing.inView ? 'is-visible' : ''} font-display font-light italic text-[var(--navy)] mb-10 sm:mb-12 mx-auto max-w-[820px]`}
             style={{
-              fontSize: 'clamp(2.25rem, 6vw, 5rem)',
-              lineHeight: 1.02,
-              letterSpacing: '-0.04em',
+              fontSize: 'clamp(2.5rem, 6.5vw, 5.5rem)',
+              lineHeight: 0.98,
+              letterSpacing: '-0.045em',
               fontVariationSettings: "'opsz' 144, 'SOFT' 100",
             }}
           >
@@ -427,10 +430,10 @@ export function PadreLanding({ onBack }: Props) {
             className="group inline-flex items-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
             style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
           >
-            Abrir el recorrido
+            Dar acceso al recorrido
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
           </a>
-          <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)]">
+          <p className="mt-7 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--hueso)]">
             Hoy es un buen momento para que arranque
           </p>
         </div>
