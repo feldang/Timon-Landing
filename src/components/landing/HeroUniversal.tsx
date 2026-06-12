@@ -49,7 +49,7 @@ export function HeroUniversal({ onSelect }: Props) {
         {/* MIDDLE — title + subtitle, centrado verticalmente en mobile */}
         <div
           ref={sub.ref}
-          className={`reveal reveal-delay-2 ${sub.inView ? 'is-visible' : ''} flex-1 flex flex-col justify-center sm:flex-none sm:justify-start`}
+          className={`reveal reveal-delay-2 ${sub.inView ? 'is-visible' : ''} min-h-[72dvh] sm:min-h-0 flex flex-col justify-center sm:flex-none sm:justify-start`}
         >
           <h1
             className="font-display font-light text-[var(--navy)] mb-4 sm:mb-6"
