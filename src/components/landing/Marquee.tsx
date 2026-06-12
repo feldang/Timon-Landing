@@ -9,6 +9,18 @@ type Item = {
 }
 
 const CAREERS: Item[] = [
+  { name: 'Políticas Públicas' },
+  { name: 'Biomedicina' },
+  { name: 'Diseño de Producto' },
+  { name: 'Ciberseguridad' },
+  { name: 'Comunicación Digital' },
+  { name: 'Economía' },
+  { name: 'Inteligencia Artificial' },
+  { name: 'Negocios Globales' },
+  { name: 'Producción Musical' },
+  { name: 'Artes Audiovisuales' },
+  { name: 'Tecnología Educativa' },
+  { name: 'Energías Renovables' },
   { name: 'Ciencias Políticas' },
   { name: 'Medicina' },
   { name: 'Arquitectura' },
@@ -17,13 +29,17 @@ const CAREERS: Item[] = [
   { name: 'Ciencias de la Computación' },
   { name: 'Psicología' },
   { name: 'Comunicación' },
-  { name: 'Economía' },
   { name: 'Derecho' },
   { name: 'Bioquímica' },
   { name: 'Biotecnología' },
   { name: 'Antropología' },
   { name: 'Ingeniería Industrial' },
   { name: 'Sociología' },
+  { name: 'Derecho Digital' },
+  { name: 'Biociencias' },
+  { name: 'Bioingeniería' },
+  { name: 'Edición Digital' },
+  { name: 'Diseño Multimedia' },
   { name: 'Letras' },
   { name: 'Veterinaria' },
   { name: 'Diseño Gráfico' },
@@ -145,13 +161,12 @@ export function Marquee({ variant, surface = 'cream', speedSec = 70 }: Props) {
                 />
               )}
               <span
-                className="font-display italic font-light"
+                className="font-display font-normal"
                 style={{
                   fontSize: 'clamp(1rem, 1.8vw, 1.5rem)',
                   letterSpacing: '-0.02em',
                   lineHeight: 1.1,
                   color: textColor,
-                  fontVariationSettings: "'opsz' 144, 'SOFT' 100",
                 }}
               >
                 {item.name}

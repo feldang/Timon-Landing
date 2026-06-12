@@ -8,6 +8,7 @@ type Props = {
   eyebrow: string
   title: string
   titleEm?: string
+  subtitle?: string
   beforeLabel?: string
   afterLabel?: string
   pairs: Pair[]
@@ -24,12 +25,13 @@ export function BeforeAfter({
   eyebrow,
   title,
   titleEm,
+  subtitle,
   beforeLabel = 'Hoy',
   afterLabel = 'Con Timon',
   pairs,
 }: Props) {
   return (
-    <section className="relative py-20 sm:py-28 border-y border-[var(--border-cream)] bg-[var(--cream-elev)] overflow-hidden">
+    <section className="relative py-12 sm:py-28 border-y border-[var(--border-cream)] bg-[var(--cream-elev)] overflow-hidden">
       {/* Decorative editorial halo */}
       <div
         className="absolute pointer-events-none ocean-orb"
@@ -37,7 +39,7 @@ export function BeforeAfter({
       />
 
       <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw]">
-        <div className="mb-12 sm:mb-16 max-w-[920px]">
+        <div className="mb-14 sm:mb-16 max-w-[920px]">
           <p className="eyebrow eyebrow--with-rule mb-7">{eyebrow}</p>
           <h2
             className="font-display font-light text-[var(--navy)]"
@@ -45,19 +47,20 @@ export function BeforeAfter({
               fontSize: 'clamp(2rem, 5vw, 4rem)',
               lineHeight: 1.02,
               letterSpacing: '-0.035em',
-              fontVariationSettings: "'opsz' 144, 'SOFT' 80",
             }}
           >
             {title}{' '}
             {titleEm && (
-              <em
-                className="italic font-normal text-[var(--ocean)]"
-                style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 80" }}
-              >
+              <span className="text-[var(--ocean)] font-normal not-italic">
                 {titleEm}
-              </em>
+              </span>
             )}
           </h2>
+          {subtitle && (
+            <p className="mt-5 text-[1.0625rem] sm:text-[1.125rem] leading-[1.55] text-[var(--navy)]/65 max-w-[560px]">
+              {subtitle}
+            </p>
+          )}
         </div>
 
         {/* Column headers — visible on lg up */}
@@ -78,10 +81,10 @@ export function BeforeAfter({
         </div>
 
         {/* Pairs */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_72px_1fr] gap-4 lg:gap-0">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_72px_1fr] gap-6 lg:gap-0">
           {/* Mobile labels group + pair rendering */}
           {pairs.map((p, idx) => (
-            <div key={idx} className="contents">
+            <div key={idx} className="lg:contents flex flex-col gap-2">
               {/* BEFORE card */}
               <div
                 className="relative rounded-2xl border border-dashed border-[var(--border-cream-strong)] bg-[var(--cream-deep)]/60 px-6 py-6 lg:py-7 lg:mb-3 transition-all hover:border-[var(--border-cream-strong)]"
@@ -90,12 +93,11 @@ export function BeforeAfter({
                   {beforeLabel}
                 </span>
                 <p
-                  className="font-display italic text-[var(--navy)]/55 leading-[1.35]"
+                  className="font-sans text-[var(--navy)]/55 leading-[1.45]"
                   style={{
                     fontWeight: 400,
                     fontSize: '1.0625rem',
-                    letterSpacing: '-0.012em',
-                    fontVariationSettings: "'opsz' 72, 'SOFT' 80",
+                    letterSpacing: '-0.005em',
                   }}
                 >
                   {p.before}

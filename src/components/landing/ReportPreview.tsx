@@ -4,9 +4,9 @@ import { Logo } from './Logo'
 
 export function ReportPreview() {
   const careers = [
-    { name: 'Ciencias Políticas', match: 94 },
-    { name: 'Sociología', match: 88 },
-    { name: 'Comunicación', match: 81 },
+    { name: 'Negocios Digitales', match: 94 },
+    { name: 'Ingeniería Informática', match: 88 },
+    { name: 'Data Analytics', match: 81 },
   ]
 
   return (
@@ -36,10 +36,9 @@ export function ReportPreview() {
               fontWeight: 400,
               fontSize: '1.5rem',
               letterSpacing: '-0.02em',
-              fontVariationSettings: "'opsz' 144, 'SOFT' 100",
             }}
           >
-            Tu perfil <em className="italic-emphasis">personal</em><br />
+            Tu perfil <span className="text-[var(--ocean)] font-medium">personal</span><br />
             + 5 carreras compatibles.
           </p>
         </div>
@@ -83,7 +82,7 @@ export function ReportPreview() {
         {/* Mono footer */}
         <div className="px-6 py-3 border-t border-[var(--border-cream)]">
           <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--hueso)] text-center">
-            Recorrido completado · 18 días
+            Recorrido completado · 4 días
           </p>
         </div>
       </div>

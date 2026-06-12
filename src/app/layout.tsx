@@ -1,19 +1,18 @@
 import type { Metadata } from 'next'
-import { Fraunces, IBM_Plex_Sans, JetBrains_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
-const fraunces = Fraunces({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-display',
-  axes: ['opsz', 'SOFT'],
-  style: ['normal', 'italic'],
+  variable: '--font-sans',
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 })
 
-const plex = IBM_Plex_Sans({
+const jakartaDisplay = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-sans',
-  weight: ['400', '500', '600', '700'],
+  variable: '--font-display',
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 })
 
@@ -45,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${fraunces.variable} ${plex.variable} ${mono.variable} h-full antialiased`}
+      className={`${jakarta.variable} ${jakartaDisplay.variable} ${mono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body

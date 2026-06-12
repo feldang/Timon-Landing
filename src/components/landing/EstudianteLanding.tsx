@@ -10,25 +10,25 @@ import { useInView } from '@/hooks/useInView'
 
 const PRODUCT_URL = 'https://app.timon.com.ar'
 
-type Props = { onBack: () => void }
+type Props = { onBack: () => void; onPricing: () => void }
 
 const CHAPTERS = [
   {
     n: '01',
-    title: 'Mapeamos tu perfil',
-    body: 'Preguntas sobre tus intereses y fricciones. Pausás cuando querés — el recorrido te espera.',
-    chips: ['Lo que te interesa', 'Cómo pensás', 'Cómo trabajás', 'Qué te aburre'],
+    title: 'Hacemos preguntas',
+    body: 'Sobre tus intereses y fricciones. Pausás cuando querés. Lo hacés a tu ritmo.',
+    chips: ['Lo que te interesa', 'Cómo pensás', 'Cómo sos', 'Qué te aburre'],
   },
   {
     n: '02',
-    title: 'Se cruzan los datos',
-    body: 'La radiografía exacta de tus variables. La base que va a sostener tu decisión.',
+    title: 'Analizamos detalladamente',
+    body: 'La radiografía exacta de tus variables.',
     chips: ['Fortalezas', 'Límites', 'Ritmo de aprendizaje', 'Modo de resolución'],
   },
   {
     n: '03',
-    title: 'Decidís con el panorama completo',
-    body: 'Carreras, universidades, costos y salidas reales en Argentina.',
+    title: 'Entregamos el panorama completo',
+    body: 'Carreras que se adaptan con vos, universidades, costos y salida laboral.',
     chips: ['Carreras afines', 'Oferta universitaria', 'Costo y duración', 'Salida laboral'],
   },
 ]
@@ -42,12 +42,11 @@ function ChapterCard({ step, idx, isLast }: { step: (typeof CHAPTERS)[number]; i
       className={`relative reveal ${reveal.inView ? 'is-visible' : ''} grid grid-cols-[auto_1fr] sm:grid-cols-[180px_1fr] gap-x-6 sm:gap-x-12 lg:gap-x-16 py-12 sm:py-16 ${idx > 0 ? 'border-t border-[var(--border-cream-strong)]' : ''}`}
     >
       <span
-        className="font-display italic font-light text-[var(--ocean)] self-start"
+        className="font-display font-light text-[var(--ocean)] self-start"
         style={{
-          fontSize: 'clamp(4.5rem, 9vw, 7.5rem)',
+          fontSize: 'clamp(2.25rem, 9vw, 7.5rem)',
           lineHeight: 0.85,
           letterSpacing: '-0.06em',
-          fontVariationSettings: "'opsz' 144, 'SOFT' 100",
         }}
       >
         {step.n}
@@ -60,7 +59,6 @@ function ChapterCard({ step, idx, isLast }: { step: (typeof CHAPTERS)[number]; i
             fontSize: 'clamp(1.5rem, 2.2vw, 2rem)',
             lineHeight: 1.1,
             letterSpacing: '-0.025em',
-            fontVariationSettings: "'opsz' 144, 'SOFT' 80",
           }}
         >
           {step.title}
@@ -90,7 +88,7 @@ function ChapterCard({ step, idx, isLast }: { step: (typeof CHAPTERS)[number]; i
   )
 }
 
-export function EstudianteLanding({ onBack }: Props) {
+export function EstudianteLanding({ onBack: _onBack, onPricing }: Props) {
   const heroLeft = useInView<HTMLDivElement>()
   const heroRight = useInView<HTMLDivElement>()
   const chaptersTitle = useInView<HTMLDivElement>()
@@ -99,83 +97,63 @@ export function EstudianteLanding({ onBack }: Props) {
   return (
     <div className="animate-fade-in bg-[var(--cream)]">
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 editorial-grid editorial-grid-fade pointer-events-none" />
-        <div
-          className="absolute pointer-events-none ocean-orb"
-          style={{ top: '20%', right: '-10%', width: 700, height: 700 }}
-        />
-        <SectionMark label="01" position="top-right" tone="terra" />
+      <section className="relative overflow-hidden flex flex-col min-h-[100dvh] sm:min-h-0" style={{ marginTop: '-4rem', paddingTop: '4rem' }}>
+        {/* Animated gradient mesh */}
+        <div className="mesh-stage" aria-hidden>
+          <div className="mesh-blob mesh-blob--ocean-a" />
+          <div className="mesh-blob mesh-blob--terra" />
+          <div className="mesh-blob mesh-blob--ocean-b" />
+        </div>
 
-        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] pt-10 pb-20 sm:pt-14 sm:pb-28">
+        {/* Section number — offset by extra paddingTop */}
+        <div className="absolute top-24 sm:top-[6.5rem] right-5 sm:right-8 lg:right-12 xl:right-[5vw] 2xl:right-[6vw] font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--hueso)] z-10">
+          02 / Estudiante
+        </div>
+
+        <div className="relative flex-1 w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] flex flex-col justify-center sm:justify-start sm:pt-28 sm:pb-32 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-start">
             <div ref={heroLeft.ref} className={`reveal ${heroLeft.inView ? 'is-visible' : ''}`}>
-              <span
-                className="inline-flex items-center gap-2 text-[12px] font-medium text-[var(--navy)] mb-6 px-3.5 py-1.5 rounded-full"
-                style={{
-                  background: 'rgba(201, 127, 94, 0.10)',
-                  border: '1px solid rgba(201, 127, 94, 0.30)',
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--terra)]" />
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--hueso)] mb-4 sm:mb-8 inline-flex items-center gap-3">
+                <span className="w-8 h-px bg-[var(--terra)]/60" />
                 Para vos · 14–18 años
-              </span>
+              </p>
 
               <h1
-                className="font-display font-light text-[var(--navy)] mb-6 sm:mb-8"
+                className="font-display font-light text-[var(--navy)] mb-5 sm:mb-12"
                 style={{
-                  fontSize: 'clamp(2.25rem, 5.5vw, 4.75rem)',
-                  lineHeight: 0.98,
+                  fontSize: 'clamp(2.75rem, 11.5vw, 4rem)',
+                  lineHeight: 0.97,
                   letterSpacing: '-0.04em',
-                  fontVariationSettings: "'opsz' 144, 'SOFT' 100",
                 }}
               >
                 El primer paso<br />
                 no es elegir.<br />
-                <em
-                  className="italic font-normal text-[var(--ocean)]"
-                  style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 100" }}
-                >
+                <span className="text-[var(--ocean)] font-normal not-italic">
                   Es entenderte.
-                </em>
+                </span>
               </h1>
 
-              <p className="reveal reveal-delay-2 is-visible text-[1rem] sm:text-[1.25rem] leading-[1.5] text-[var(--navy)]/80 max-w-[600px] mb-8 sm:mb-10">
-                No devolvemos una lista al azar. Detallamos planes de estudio, duración real, costos actualizados y el estado del mercado laboral.
-              </p>
-
-              <div className="flex flex-col sm:flex-row sm:items-center gap-5">
-                <a
-                  href={PRODUCT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
-                  style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
-                >
-                  Empezar el recorrido
-                  <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-                </a>
-                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--hueso)]">
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--hueso)]">
                   Privado · sin límite de tiempo
                 </p>
-              </div>
             </div>
 
-            <div ref={heroRight.ref} className={`reveal reveal-delay-3 ${heroRight.inView ? 'is-visible' : ''} lg:pl-4 max-w-md mx-auto w-full`}>
+            <div ref={heroRight.ref} className={`reveal reveal-delay-3 ${heroRight.inView ? 'is-visible' : ''} hidden sm:block lg:pl-4 max-w-md mx-auto w-full`}>
               <ChatPreview />
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Catalog marquee — careers */}
-      <Marquee variant="careers" surface="cream" speedSec={65} />
+        <div className="mt-auto">
+          <Marquee variant="careers" surface="cream" speedSec={65} />
+        </div>
+      </section>
 
       {/* ─── CÓMO ES — chapters editorial con chips ─── */}
       <section className="relative border-t border-[var(--border-cream)] bg-[var(--cream-elev)] overflow-hidden">
         <SectionMark label="02" position="top-left" tone="ocean" opacity={0.55} />
 
-        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-24 sm:py-32">
+        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-16 sm:py-24">
           <div
             ref={chaptersTitle.ref}
             className={`reveal ${chaptersTitle.inView ? 'is-visible' : ''} max-w-[920px] mb-14 sm:mb-20`}
@@ -184,19 +162,12 @@ export function EstudianteLanding({ onBack }: Props) {
             <h2
               className="font-display font-light text-[var(--navy)]"
               style={{
-                fontSize: 'clamp(2.25rem, 5.5vw, 4.25rem)',
+                fontSize: 'clamp(2rem, 5vw, 4rem)',
                 lineHeight: 1.0,
                 letterSpacing: '-0.04em',
-                fontVariationSettings: "'opsz' 144, 'SOFT' 80",
               }}
             >
-              El proceso.{' '}
-              <em
-                className="italic font-normal text-[var(--ocean)]"
-                style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 80" }}
-              >
-                A tu ritmo.
-              </em>
+              Cómo funcionamos…
             </h2>
           </div>
 
@@ -208,13 +179,25 @@ export function EstudianteLanding({ onBack }: Props) {
         </div>
       </section>
 
+      {/* ─── CTA INTERMEDIO ─── */}
+      <section className="bg-[var(--cream-elev)] border-t border-[var(--border-cream)] py-12 sm:py-16 text-center">
+        <button
+          onClick={onPricing}
+          className="group inline-flex items-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
+          style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
+        >
+          Empezar el recorrido
+          <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+        </button>
+      </section>
+
       {/* ─── ANTES / DESPUÉS — shift visual ─── */}
       <BeforeAfter
         eyebrow="Lo que te llevás"
         title="De la incertidumbre"
         titleEm="a tener el mapa en tus manos."
-        beforeLabel="Hoy"
-        afterLabel="Con Timon"
+        beforeLabel="Tu realidad hoy"
+        afterLabel="Tu realidad con Timon"
         pairs={[
           { before: '"No sé qué carreras van conmigo."', after: 'Entendés qué opciones encajan con tu perfil, y exactamente por qué.' },
           { before: '"No sé bien de qué se trata cada una."', after: 'Tenés el detalle real y los planes de estudio de cada carrera.' },
@@ -227,7 +210,7 @@ export function EstudianteLanding({ onBack }: Props) {
       <section className="relative bg-[var(--cream-elev)] border-t border-[var(--border-cream)] overflow-hidden">
         <SectionMark label="04" position="bottom-right" tone="terra" />
 
-        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-24 sm:py-32 text-center">
+        <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-16 sm:py-24 text-center">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--hueso)] mb-8 inline-flex items-center gap-3 justify-center">
             <span className="w-8 h-px bg-[var(--terra)]/60" />
             Cierre
@@ -238,29 +221,26 @@ export function EstudianteLanding({ onBack }: Props) {
           </div>
           <h2
             ref={closingTitle.ref}
-            className={`reveal ${closingTitle.inView ? 'is-visible' : ''} font-display font-light italic text-[var(--navy)] mb-10 sm:mb-12 mx-auto max-w-[820px]`}
+            className={`reveal ${closingTitle.inView ? 'is-visible' : ''} font-display font-light text-[var(--navy)] mb-10 sm:mb-12 mx-auto max-w-[820px]`}
             style={{
-              fontSize: 'clamp(2.5rem, 6.5vw, 5.5rem)',
+              fontSize: 'clamp(1.9rem, 6.5vw, 5.5rem)',
               lineHeight: 0.98,
               letterSpacing: '-0.045em',
-              fontVariationSettings: "'opsz' 144, 'SOFT' 100",
             }}
           >
             Cuando quieras,{' '}
-            <span className="text-[var(--ocean)] font-normal not-italic" style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 100" }}>
+            <span className="text-[var(--ocean)] font-normal not-italic">
               empezamos.
             </span>
           </h2>
-          <a
-            href={PRODUCT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={onPricing}
             className="group inline-flex items-center gap-3 px-8 py-[18px] rounded-full bg-[var(--ocean)] text-[var(--cream-elev)] font-medium text-[15px] hover:bg-[var(--ocean-deep)] transition-all cursor-pointer"
             style={{ boxShadow: '0 12px 32px rgba(30, 91, 160, 0.20)' }}
           >
             Empezar el recorrido
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-          </a>
+          </button>
           <p className="mt-7 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--hueso)]">
             Privado · sin límite de tiempo
           </p>

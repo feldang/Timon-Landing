@@ -47,7 +47,6 @@ export function SectionMark({
         color: 'transparent',
         WebkitTextStroke: `1.5px ${TONES[tone]}`,
         opacity: opacity ?? 1,
-        fontVariationSettings: "'opsz' 144, 'SOFT' 100",
         zIndex: 0,
       }}
     >

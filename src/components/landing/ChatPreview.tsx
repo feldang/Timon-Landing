@@ -42,7 +42,7 @@ export function ChatPreview() {
 
           <div className="flex justify-start animate-fade-in-up animate-delay-300">
             <div className="max-w-[88%] px-4 py-3 rounded-2xl rounded-tl-md bg-[var(--cream-elev)] border border-[var(--border-cream)] text-[var(--navy)] text-[14px] leading-[1.55]">
-              Anotado. Lo agrego a tu <em className="italic-emphasis">modo de resolución</em>.
+              Anotado. Lo agrego a tu <span className="text-[var(--ocean)] font-medium">modo de resolución</span>.
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@ export function ChatPreview() {
         {/* Footer mono caption */}
         <div className="px-5 py-3 border-t border-[var(--border-cream)] bg-[var(--cream-elev)]">
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--hueso)] text-center">
-            Vos marcás el ritmo · vos elegís qué contás
+            Vos marcás el ritmo · Vos elegís qué contás
           </p>
         </div>
       </div>
