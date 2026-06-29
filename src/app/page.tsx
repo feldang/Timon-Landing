@@ -3,20 +3,20 @@
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/landing/Navbar'
 import { HeroUniversal } from '@/components/landing/HeroUniversal'
-import { EstudianteLanding } from '@/components/landing/EstudianteLanding'
-import { PadreLanding } from '@/components/landing/PadreLanding'
+import { InputSection } from '@/components/landing/InputSection'
+import { OutputSection } from '@/components/landing/OutputSection'
 import { Footer } from '@/components/landing/Footer'
 import { ColegiosSection } from '@/components/landing/ColegiosSection'
 import { PricingSection } from '@/components/landing/PricingSection'
 import { FloatingChat } from '@/components/landing/FloatingChat'
 import { ScrollProgress } from '@/components/landing/ScrollProgress'
 
-type Audience = 'universal' | 'estudiante' | 'padre' | 'colegios' | 'pricing'
+type Audience = 'universal' | 'colegios' | 'pricing'
 
 export default function Home() {
   const [audience, setAudience] = useState<Audience>('universal')
 
-  const handleSelect = (a: 'estudiante' | 'padre' | 'colegios' | 'pricing') => {
+  const handleSelect = (a: 'colegios' | 'pricing') => {
     setAudience(a)
     if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'instant' })
   }
@@ -28,11 +28,7 @@ export default function Home() {
 
   useEffect(() => {
     document.title =
-      audience === 'estudiante'
-        ? 'Timon — El primer paso no es elegir. Es entenderte.'
-        : audience === 'padre'
-        ? 'Timon — Que salga de la nebulosa con un mapa propio'
-        : audience === 'colegios'
+      audience === 'colegios'
         ? 'Timon — Para colegios'
         : audience === 'pricing'
         ? 'Timon — Planes y Precios'
@@ -50,9 +46,13 @@ export default function Home() {
       />
 
       <div className="flex-1">
-        {audience === 'universal' && <HeroUniversal onSelect={handleSelect} />}
-        {audience === 'estudiante' && <EstudianteLanding onBack={handleReset} onPricing={() => handleSelect('pricing')} />}
-        {audience === 'padre' && <PadreLanding onBack={handleReset} onPricing={() => handleSelect('pricing')} />}
+        {audience === 'universal' && (
+          <>
+            <HeroUniversal onPricing={() => handleSelect('pricing')} />
+            <InputSection />
+            <OutputSection onPricing={() => handleSelect('pricing')} />
+          </>
+        )}
         {audience === 'colegios' && <ColegiosSection onBack={handleReset} />}
         {audience === 'pricing' && <PricingSection onBack={handleReset} />}
       </div>

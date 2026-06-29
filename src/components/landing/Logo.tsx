@@ -106,14 +106,20 @@ export function Logo({
   ariaLabel = 'Timon — volver al inicio',
 }: Props) {
   const wordColor = tone === 'cream' ? TONE.cream : TONE.navy
+  const wordFontSize =
+    size <= 24 ? '0.875rem' :
+    size <= 40 ? '1.0625rem' :
+    size <= 60 ? '1.375rem' :
+    size <= 80 ? '1.75rem' : '2.125rem'
+  const gapPx = size <= 32 ? 8 : size <= 56 ? 10 : 14
 
   const inner = (
-    <span className="inline-flex items-center gap-2.5">
+    <span className="inline-flex items-center" style={{ gap: gapPx }}>
       <WheelMark tone={tone} size={size} />
       {showWordmark && (
         <span
-          className="font-sans font-bold text-[1.125rem] tracking-[-0.025em] leading-none"
-          style={{ color: wordColor }}
+          className="font-sans font-bold tracking-[-0.03em] leading-none"
+          style={{ color: wordColor, fontSize: wordFontSize }}
         >
           Timon
         </span>

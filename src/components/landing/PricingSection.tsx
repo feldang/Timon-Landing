@@ -128,7 +128,7 @@ function PricingTable() {
       </div>
 
       {/* Desktop: table */}
-      <div className="hidden sm:block overflow-x-auto">
+      <div className="hidden sm:block overflow-x-auto pt-5">
       <table
         className="w-full"
         style={{ borderCollapse: 'separate', borderSpacing: 0, tableLayout: 'fixed' }}

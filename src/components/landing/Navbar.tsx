@@ -3,13 +3,12 @@
 import { Logo } from './Logo'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
-
-type Audience = 'universal' | 'estudiante' | 'padre' | 'colegios' | 'pricing'
+type Audience = 'universal' | 'colegios' | 'pricing'
 
 type Props = {
   audience: Audience
   onLogoClick: () => void
-  onSwitchAudience: (a: 'estudiante' | 'padre' | 'colegios' | 'pricing') => void
+  onSwitchAudience: (a: 'colegios' | 'pricing') => void
   onBack: () => void
 }
 
@@ -26,7 +25,6 @@ export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Prop
     <header className="sticky top-0 left-0 right-0 z-50">
       <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] h-16 flex items-center justify-between gap-3">
 
-        {/* Left — back + logo */}
         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           {!isHome && (
             <button
@@ -38,66 +36,25 @@ export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Prop
               <span className="hidden sm:inline">Volver</span>
             </button>
           )}
+          <Logo onClick={onLogoClick} tone="navy" size={28} />
           {!isHome && (
-            <>
-              <Logo onClick={onLogoClick} tone="navy" size={26} />
-              <span className="hidden md:inline-flex items-center font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)] ml-1">
-                Claridad antes de elegir
-              </span>
-            </>
+            <span className="hidden md:inline-flex items-center font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--hueso)] ml-1">
+              Claridad antes de elegir
+            </span>
           )}
         </div>
 
-        {/* Right — nav links + CTA */}
         <nav className="flex items-center gap-4 sm:gap-5 shrink-0">
-
-          {/* Audience-specific links */}
-          {audience === 'estudiante' && (
-            <button onClick={() => onSwitchAudience('padre')} className={btnClass}>
-              ¿Sos padre o madre?
-            </button>
-          )}
-          {audience === 'padre' && (
-            <button onClick={() => onSwitchAudience('estudiante')} className={btnClass}>
-              ¿Sos estudiante?
-            </button>
-          )}
-          {audience === 'universal' && (
-            <>
-              <button onClick={() => onSwitchAudience('estudiante')} className={btnClass}>
-                Para estudiantes
-              </button>
-              <button onClick={() => onSwitchAudience('padre')} className={btnClass}>
-                Para familias
-              </button>
-            </>
-          )}
-          {(isColegios || isPricing) && (
-            <>
-              <button onClick={() => onSwitchAudience('estudiante')} className={btnClass}>
-                Para estudiantes
-              </button>
-              <button onClick={() => onSwitchAudience('padre')} className={btnClass}>
-                Para familias
-              </button>
-            </>
-          )}
-
-          {/* Pricing link — show everywhere except on pricing page */}
           {!isPricing && (
             <button onClick={() => onSwitchAudience('pricing')} className={btnClass}>
               Precios
             </button>
           )}
-
-          {/* Colegios link — show everywhere except colegios + pricing */}
           {!isColegios && !isPricing && (
             <button onClick={() => onSwitchAudience('colegios')} className={btnClass}>
               Para colegios
             </button>
           )}
-
-          {/* CTA — hide on colegios (institutional) and pricing (has its own CTA) */}
           {!isColegios && !isPricing && (
             <button
               onClick={() => onSwitchAudience('pricing')}
