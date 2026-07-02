@@ -80,7 +80,7 @@ export function HeroUniversal({ onPricing }: Props) {
       </div>
 
       <div className="relative mt-auto">
-        <Marquee variant="universities" surface="cream" speedSec={70} />
+        <Marquee variant="careers" surface="cream" speedSec={70} />
       </div>
     </section>
   )

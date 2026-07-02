@@ -47,7 +47,7 @@ export function InputSection() {
             ¿Cómo funciona Timon?
           </h2>
           <p className="text-[1rem] sm:text-[1.125rem] leading-[1.65] text-[var(--navy)]/75 w-full mb-6">
-            Hacemos preguntas sobre intereses y fricciones. Con formatos distintos. Lo podés completar a tu ritmo.
+            No es un formulario. Son preguntas que revelan cómo pensás, qué te mueve y qué te frena.
           </p>
           {!isMobile && <ViewToggle value={view} onChange={setView} options={['phone', 'desktop']} />}
         </div>
