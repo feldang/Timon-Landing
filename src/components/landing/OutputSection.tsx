@@ -1,9 +1,10 @@
 'use client'
 
-import { ArrowRight, Download } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { BeforeAfter } from './BeforeAfter'
 import { WheelMark } from './Logo'
 import { SectionMark } from './SectionMark'
+import { ReportCarousel } from './ReportCarousel'
 import { useInView } from '@/hooks/useInView'
 
 type Props = { onPricing: () => void }
@@ -64,14 +65,7 @@ export function OutputSection({ onPricing }: Props) {
             <p className="text-[1rem] sm:text-[1.125rem] leading-[1.65] text-[var(--navy)]/65 w-full mb-8 sm:mb-10">
               Sección de introspección, carreras, universidades y mercado laboral.
             </p>
-            <a
-              href="/reporte-ejemplo.pdf"
-              download
-              className="inline-flex items-center gap-3 px-6 py-[14px] rounded-full border border-[var(--ocean)] text-[var(--ocean)] font-medium text-[14px] hover:bg-[var(--ocean)] hover:text-[var(--cream-elev)] transition-all cursor-pointer"
-            >
-              Descargar reporte de ejemplo
-              <Download size={15} />
-            </a>
+            <ReportCarousel />
           </div>
 
         </div>

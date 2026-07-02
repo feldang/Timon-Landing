@@ -50,15 +50,13 @@ export function HeroUniversal({ onPricing }: Props) {
               letterSpacing: '-0.045em',
             }}
           >
-            Entender{' '}
+            Descubrí{' '}
             <span className="text-[var(--ocean)] font-normal not-italic">cómo</span>
-            {' '}pensás y saber{' '}
+            {' '}pensás,{' '}
             <span className="text-[var(--ocean)] font-normal not-italic">qué</span>
-            {' '}estudiar,{' '}
+            {' '}estudiar y{' '}
             <span className="text-[var(--ocean)] font-normal not-italic">dónde</span>
-            {' '}y{' '}
-            <span className="text-[var(--ocean)] font-normal not-italic">por qué</span>
-            .
+            {' '}empezar.
           </h1>
 
         </div>

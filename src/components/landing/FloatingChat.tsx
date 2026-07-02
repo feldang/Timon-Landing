@@ -25,7 +25,7 @@ export function FloatingChat() {
       {/* Chat panel */}
       {(step === 'open' || step === 'done') && (
         <div
-          className="bg-[var(--cream-elev)] border border-[var(--border-cream)] rounded-2xl overflow-hidden animate-fade-in-up w-[320px]"
+          className="bg-[var(--cream-elev)] border border-[var(--border-cream)] rounded-2xl overflow-hidden animate-fade-in-up w-[320px] max-w-[calc(100vw-2rem)]"
           style={{ boxShadow: '0 16px 48px rgba(15,31,54,0.15)' }}
         >
           {/* Header */}
@@ -96,8 +96,8 @@ export function FloatingChat() {
         {step !== 'open' && step !== 'done' && (
           <button
             onClick={open}
-            className="relative bg-[var(--cream-elev)] border border-[var(--border-cream)] rounded-2xl rounded-br-sm px-4 py-3 cursor-pointer text-left animate-float"
-            style={{ boxShadow: '0 8px 28px rgba(15,31,54,0.14)', maxWidth: 220 }}
+            className="relative bg-[var(--cream-elev)] border border-[var(--border-cream)] rounded-2xl rounded-br-sm px-4 py-3 cursor-pointer text-left animate-float hidden min-[380px]:block"
+            style={{ boxShadow: '0 8px 28px rgba(15,31,54,0.14)', maxWidth: 'min(220px, calc(100vw - 100px))' }}
           >
             <p className="text-[var(--navy)] text-[13px] font-medium leading-[1.45]">
               ¿Tenés alguna pregunta?

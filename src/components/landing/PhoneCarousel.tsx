@@ -145,70 +145,74 @@ function NavBtn({ onClick, disabled, children }: { onClick: () => void; disabled
 
 // ─── Slide 1: La Charla ──────────────────────────────────────────────────────
 
-const S1_RESPONSES = [
-  ['Procesás antes de actuar. Eso dice mucho.', '¿Eso te pasa solo con problemas ajenos o también con los tuyos?'],
-  ['Entender antes de concluir. Buena señal.', '¿Eso lo hacés más en lo académico o en todo?'],
-  ['Modo ejecutor. Acción primero, corrección después.', '¿Te resultó bien eso hasta ahora?'],
+const S1_QUESTIONS = [
+  {
+    step: '1 de 3',
+    q: 'Alguien te trae un problema complicado. ¿Qué hacés primero?',
+    opts: ['Analizo antes de hablar', 'Le hago preguntas para entender bien', 'Propongo algo rápido y ajusto'],
+  },
+  {
+    step: '2 de 3',
+    q: '¿Cómo preferís aprender algo nuevo?',
+    opts: ['Leyendo y reflexionando solo', 'Viendo ejemplos y practicando', 'Probando directamente por mi cuenta'],
+  },
 ]
-const S1_FOLLOW = ['Siempre fui así', 'Depende del contexto', 'Lo fui aprendiendo']
-
-type ChatMsg = { text: string; isUser: boolean }
 
 function Slide1() {
-  const [msgs, setMsgs] = useState<ChatMsg[]>([
-    { text: 'Antes de arrancar, contame una cosa.', isUser: false },
-    { text: 'Alguien te trae un problema complicado. ¿Qué hacés primero?', isUser: false },
-  ])
-  const [opts, setOpts] = useState(['Analizo antes de hablar', 'Le hago preguntas para entender bien', 'Propongo algo rápido y ajusto después'])
-  const [busy, setBusy] = useState(false)
-  const msgsRef = useRef<HTMLDivElement>(null)
+  const [qIdx, setQIdx] = useState(0)
+  const [answered, setAnswered] = useState(false)
+  const [selected, setSelected] = useState('')
 
-  const pick = (text: string, idx: number) => {
-    if (busy) return
-    setBusy(true)
-    setTimeout(() => setMsgs(p => [...p, { text, isUser: true }]), 200)
-    const resp = S1_RESPONSES[idx] ?? S1_RESPONSES[0]
-    setTimeout(() => setMsgs(p => [...p, { text: resp[0], isUser: false }]), 800)
-    setTimeout(() => {
-      setMsgs(p => [...p, { text: resp[1], isUser: false }])
-      setOpts(S1_FOLLOW)
-      setBusy(false)
-    }, 1600)
+  const question = S1_QUESTIONS[qIdx % S1_QUESTIONS.length]
+
+  const pick = (opt: string) => {
+    if (answered) return
+    setSelected(opt)
+    setAnswered(true)
   }
 
-  useEffect(() => {
-    if (msgsRef.current) msgsRef.current.scrollTop = msgsRef.current.scrollHeight
-  }, [msgs])
+  const next = () => {
+    setQIdx(i => i + 1)
+    setAnswered(false)
+    setSelected('')
+  }
 
   return (
     <>
       <div style={{ padding: '8px 11px 7px', borderBottom: `1px solid ${C.creamBorder}`, display: 'flex', alignItems: 'center', gap: 7, background: C.creamElev }}>
         <div style={{ width: 25, height: 25, borderRadius: '50%', background: C.ocean, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: C.creamElev, flexShrink: 0 }}>T</div>
-        <div>
+        <div style={{ flex: 1 }}>
           <div style={{ fontSize: 11, fontWeight: 600, color: C.navy }}>Timon</div>
           <div style={{ fontSize: 8, color: C.ocean }}>• activo</div>
         </div>
+        <div style={{ fontSize: 8, color: C.hueso, fontFamily: 'monospace' }}>{question.step}</div>
       </div>
 
-      <div ref={msgsRef} style={{ flex: 1, padding: '8px 10px 4px', display: 'flex', flexDirection: 'column', gap: 6, overflowY: 'auto', scrollbarWidth: 'none', background: C.cream }}>
-        {msgs.map((m, i) => (
-          <div key={i} style={{
-            maxWidth: '87%', padding: '7px 9px',
-            borderRadius: m.isUser ? '11px 11px 3px 11px' : '11px 11px 11px 3px',
-            background: m.isUser ? C.ocean : C.creamElev,
-            border: m.isUser ? 'none' : `1px solid ${C.creamBorder}`,
-            color: m.isUser ? C.creamElev : C.navy,
-            fontSize: 10.5, lineHeight: 1.4, fontWeight: m.isUser ? 500 : 400,
-            alignSelf: m.isUser ? 'flex-end' : 'flex-start',
-          }}>
-            {m.text}
+      <div style={{ flex: 1, padding: '12px 11px 8px', display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto', scrollbarWidth: 'none' }}>
+        <div style={{ alignSelf: 'flex-start', padding: '9px 11px', background: C.creamElev, border: `1px solid ${C.creamBorder}`, borderRadius: '11px 11px 11px 3px', maxWidth: '90%' }}>
+          <p style={{ fontSize: 11, color: C.navy, lineHeight: 1.4 }}>{question.q}</p>
+        </div>
+
+        {!answered ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            <div style={{ fontSize: 8, color: C.hueso, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 2 }}>elegí una</div>
+            {question.opts.map(opt => (
+              <ChatOpt key={opt} label={opt} onClick={() => pick(opt)} disabled={false} />
+            ))}
           </div>
-        ))}
-      </div>
-
-      <div style={{ padding: '0 10px 9px', display: 'flex', flexDirection: 'column', gap: 4, background: C.cream }}>
-        <div style={{ fontSize: 8, color: C.hueso, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 2 }}>elegí una</div>
-        {opts.map((o, i) => <ChatOpt key={o} label={o} onClick={() => pick(o, i)} disabled={busy} />)}
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+            <div style={{ alignSelf: 'flex-end', padding: '7px 10px', borderRadius: '11px 11px 3px 11px', background: C.ocean, color: C.creamElev, fontSize: 10, fontWeight: 500, lineHeight: 1.4, maxWidth: '85%' }}>
+              {selected}
+            </div>
+            <div style={{ alignSelf: 'flex-start', padding: '7px 10px', borderRadius: '11px 11px 11px 3px', background: C.creamElev, border: `1px solid ${C.creamBorder}`, color: C.navy, fontSize: 10, lineHeight: 1.4, maxWidth: '85%' }}>
+              Perfecto, lo tenemos en cuenta.
+            </div>
+            <button onClick={next} style={{ marginTop: 4, padding: '8px', borderRadius: 10, fontSize: 10, fontWeight: 600, cursor: 'pointer', border: 'none', background: C.ocean, color: C.creamElev }}>
+              Siguiente →
+            </button>
+          </div>
+        )}
       </div>
     </>
   )
