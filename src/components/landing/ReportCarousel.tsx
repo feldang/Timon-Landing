@@ -782,6 +782,7 @@ const SLIDE_W = 264
 function PhoneOutputView({ cur, setCur }: { cur: number; setCur: (i: number) => void }) {
   const viewRef = useRef<HTMLDivElement>(null)
   const [trackOffset, setTrackOffset] = useState(0)
+  const [timerKey, setTimerKey] = useState(0)
   const curRef = useRef(cur)
   const touchX = useRef(0)
 
@@ -796,6 +797,7 @@ function PhoneOutputView({ cur, setCur }: { cur: number; setCur: (i: number) => 
     curRef.current = c
     setCur(c)
     updateOffset(c)
+    setTimerKey(k => k + 1)
   }
 
   useEffect(() => {
@@ -804,6 +806,17 @@ function PhoneOutputView({ cur, setCur }: { cur: number; setCur: (i: number) => 
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [cur])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const id = setInterval(() => {
+      const next = (curRef.current + 1) % PHONE_SLIDE_META.length
+      curRef.current = next
+      setCur(next)
+      updateOffset(next)
+    }, 10000)
+    return () => clearInterval(id)
+  }, [timerKey])
 
   return (
     <div className="w-full select-none">
@@ -900,8 +913,29 @@ function AllView({ onJump }: { onJump: (idx: number) => void }) {
 
 function DesktopView({ cur, setCur }: { cur: number; setCur: (i: number) => void }) {
   const touchX = useRef(0)
-  const prev = () => setCur(Math.max(0, cur - 1))
-  const next = () => setCur(Math.min(SLIDE_META.length - 1, cur + 1))
+  const curRef = useRef(cur)
+  const [timerKey, setTimerKey] = useState(0)
+
+  useEffect(() => { curRef.current = cur }, [cur])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const id = setInterval(() => {
+      const next = (curRef.current + 1) % SLIDE_META.length
+      curRef.current = next
+      setCur(next)
+    }, 10000)
+    return () => clearInterval(id)
+  }, [timerKey])
+
+  const navigate = (idx: number) => {
+    const c = Math.max(0, Math.min(SLIDE_META.length - 1, idx))
+    setCur(c)
+    setTimerKey(k => k + 1)
+  }
+
+  const prev = () => navigate(cur - 1)
+  const next = () => navigate(cur + 1)
   const { Component, label, sub } = SLIDE_META[cur]
 
   return (
@@ -919,7 +953,7 @@ function DesktopView({ cur, setCur }: { cur: number; setCur: (i: number) => void
         <NavBtn onClick={prev} disabled={cur === 0}>&#8249;</NavBtn>
         <div className="flex gap-1.5 items-center">
           {SLIDE_META.map((_, idx) => (
-            <div key={idx} onClick={() => setCur(idx)} className="cursor-pointer" style={{ height: 5, borderRadius: idx === cur ? 2.5 : '50%', width: idx === cur ? 18 : 5, background: idx === cur ? C.navy : C.creamBorderStrong, transition: 'all 0.22s' }} />
+            <div key={idx} onClick={() => navigate(idx)} className="cursor-pointer" style={{ height: 5, borderRadius: idx === cur ? 2.5 : '50%', width: idx === cur ? 18 : 5, background: idx === cur ? C.navy : C.creamBorderStrong, transition: 'all 0.22s' }} />
           ))}
         </div>
         <NavBtn onClick={next} disabled={cur === SLIDE_META.length - 1}>&#8250;</NavBtn>
@@ -931,11 +965,20 @@ function DesktopView({ cur, setCur }: { cur: number; setCur: (i: number) => void
 // ── Main export ───────────────────────────────────────────────────────────────
 
 export function ReportCarousel() {
+  const [isMobile, setIsMobile] = useState(true)
   const [view, setView] = useState<ViewMode>('phone')
   const [cur, setCur] = useState(0)
 
   useEffect(() => {
-    if (window.innerWidth >= 768) setView('desktop')
+    const check = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      if (!mobile) setView(v => v === 'phone' ? 'desktop' : v)
+      if (mobile) setView(v => v === 'desktop' ? 'phone' : v)
+    }
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
   }, [])
 
   const handleViewChange = (v: ViewMode) => {
@@ -945,13 +988,13 @@ export function ReportCarousel() {
 
   const handleJump = (idx: number) => {
     setCur(idx)
-    setView('desktop')
+    setView(isMobile ? 'phone' : 'desktop')
   }
 
   return (
     <div className="w-full">
       <div style={{ marginBottom: 20 }}>
-        <ViewToggle value={view} onChange={handleViewChange} />
+        <ViewToggle value={view} onChange={handleViewChange} options={isMobile ? ['all', 'phone'] : undefined} />
       </div>
       {view === 'all' && <AllView onJump={handleJump} />}
       {view === 'phone' && <PhoneOutputView cur={cur} setCur={setCur} />}

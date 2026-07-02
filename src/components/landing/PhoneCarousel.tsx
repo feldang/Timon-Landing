@@ -43,11 +43,14 @@ export function PhoneCarousel() {
     setTrackOffset(w / 2 - 124 - idx * SLIDE_W)
   }
 
+  const [timerKey, setTimerKey] = useState(0)
+
   const go = (idx: number) => {
     const c = Math.max(0, Math.min(4, idx))
     curRef.current = c
     setCur(c)
     updateOffset(c)
+    setTimerKey(k => k + 1)
   }
 
   useEffect(() => {
@@ -56,6 +59,17 @@ export function PhoneCarousel() {
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const id = setInterval(() => {
+      const next = (curRef.current + 1) % SLIDES.length
+      curRef.current = next
+      setCur(next)
+      updateOffset(next)
+    }, 10000)
+    return () => clearInterval(id)
+  }, [timerKey])
 
   return (
     <div className="w-full select-none">

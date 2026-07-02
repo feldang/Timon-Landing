@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useInView } from '@/hooks/useInView'
 import { SectionMark } from './SectionMark'
 import { PhoneCarousel } from './PhoneCarousel'
@@ -18,8 +18,20 @@ const C = {
 
 
 export function InputSection() {
+  const [isMobile, setIsMobile] = useState(true)
   const [view, setView] = useState<ViewMode>('phone')
   const titleReveal = useInView<HTMLDivElement>({ threshold: 0.2 })
+
+  useEffect(() => {
+    const check = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      if (mobile && view === 'desktop') setView('phone')
+    }
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section className="relative border-t border-[var(--border-cream)] bg-[var(--cream)] overflow-hidden">
@@ -37,7 +49,7 @@ export function InputSection() {
           <p className="text-[1rem] sm:text-[1.125rem] leading-[1.65] text-[var(--navy)]/75 w-full mb-6">
             Hacemos preguntas sobre intereses y fricciones. Con formatos distintos. Lo podés completar a tu ritmo.
           </p>
-          <ViewToggle value={view} onChange={setView} options={['phone', 'desktop']} />
+          {!isMobile && <ViewToggle value={view} onChange={setView} options={['phone', 'desktop']} />}
         </div>
       </div>
 
