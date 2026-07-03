@@ -73,9 +73,6 @@ export function HeroUniversal({ onPricing }: Props) {
             Empezar el recorrido
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
           </button>
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--hueso)]">
-            Privado · sin límite de tiempo
-          </p>
         </div>
       </div>
 

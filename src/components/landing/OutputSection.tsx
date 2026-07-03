@@ -60,7 +60,7 @@ export function OutputSection({ onPricing }: Props) {
                 letterSpacing: '-0.04em',
               }}
             >
-              Vayamos directo a lo que te devuelve Timon.
+              ¿Qué devuelve Timon?
             </h2>
             <p className="text-[1rem] sm:text-[1.125rem] leading-[1.65] text-[var(--navy)]/65 w-full mb-8 sm:mb-10">
               Sección de introspección, carreras, universidades y mercado laboral.
