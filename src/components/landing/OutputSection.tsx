@@ -17,7 +17,7 @@ export function OutputSection({ onPricing }: Props) {
     <>
       {/* 1. El Cambio — BeforeAfter primero */}
       <BeforeAfter
-        eyebrow="Lo que te llevás"
+        eyebrow="El antes y el después"
         title="De la incertidumbre"
         titleEm="a tener el mapa en tus manos."
         beforeLabel="Tu realidad hoy"
