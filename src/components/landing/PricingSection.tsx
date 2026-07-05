@@ -13,229 +13,241 @@ const C = {
   navy: '#0F1F36',
   ocean: '#1E5BA0',
   creamElev: '#FBF5EA',
+  creamDeep: '#EDE2CF',
   creamBorder: '#E6DCC9',
   creamBorderStrong: '#D8CCB4',
   hueso: '#6B7B96',
   terra: '#C97F5E',
 }
 
-type Product = {
-  id: ProductId
-  name: string
-  tagline: string
-  includes: string[]
-  basePrice: number
-}
-
-type Modality = {
-  id: string
-  name: string
-  size: string
-  discountPct: number
-  highlight: boolean
-}
-
-const PRODUCTS: Product[] = [
-  {
-    id: 'timon',
-    name: 'Timon',
-    tagline: 'El recorrido completo',
-    includes: [
-      'Análisis de quién sos',
-      'Carreras compatibles con tu perfil',
-      'Universidades en Argentina',
-      'Salida laboral y rangos salariales',
-    ],
-    basePrice: 140000,
-  },
-  {
-    id: 'timon_psico',
-    name: 'Timon + Psicopedagogo/a',
-    tagline: 'Con acompañamiento profesional',
-    includes: [
-      'Todo lo incluido en Timon',
-      'Reunión con psicopedagogo/a para revisar el resultado juntos',
-    ],
-    basePrice: 210000,
-  },
+const PRODUCTS = [
+  { id: 'timon' as ProductId,      label: 'Timon',                  basePrice: 140000 },
+  { id: 'timon_psico' as ProductId, label: 'Timon + Psicopedagogo/a', basePrice: 210000 },
 ]
 
-const MODALITIES: Modality[] = [
+const MODALITIES = [
   { id: 'individual', name: 'Individual', size: '1 persona',     discountPct: 0,  highlight: false },
   { id: 'grupito',   name: 'Grupito',    size: '2 – 3 personas', discountPct: 10, highlight: false },
   { id: 'amigos',    name: 'Amigos',     size: '4 personas',     discountPct: 25, highlight: true  },
 ]
 
+const BASE_FEATURES = [
+  'Análisis de quién sos',
+  'Carreras compatibles con tu perfil',
+  'Universidades en Argentina',
+  'Salida laboral y rangos salariales',
+]
+const PSICO_FEATURE = 'Reunión con psicopedagogo/a'
+
 function formatPrice(n: number): string {
   return '$' + n.toLocaleString('es-AR')
 }
-
-function calcPrice(base: number, discountPct: number): number {
-  return Math.round(base * (1 - discountPct / 100))
+function calcPrice(base: number, pct: number): number {
+  return Math.round(base * (1 - pct / 100))
 }
 
-// ── Step label ────────────────────────────────────────────────────────────────
+// ── Product toggle ─────────────────────────────────────────────────────────────
 
-function StepLabel({ n, text }: { n: number; text: string }) {
+function ProductToggle({ value, onChange }: { value: ProductId; onChange: (v: ProductId) => void }) {
   return (
-    <p className="font-mono text-[10px] uppercase tracking-[0.18em] mb-5 flex items-center gap-3" style={{ color: C.hueso }}>
-      <span
-        className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0"
-        style={{ background: C.navy, color: C.creamElev }}
-      >
-        {n}
-      </span>
-      {text}
-    </p>
-  )
-}
-
-// ── Product card ──────────────────────────────────────────────────────────────
-
-function ProductCard({ product, selected, onSelect }: {
-  product: Product
-  selected: boolean
-  onSelect: () => void
-}) {
-  return (
-    <button
-      onClick={onSelect}
-      className="w-full text-left rounded-2xl transition-all cursor-pointer"
-      style={{
-        border: `2px solid ${selected ? C.ocean : C.creamBorderStrong}`,
-        background: selected ? 'rgba(30,91,160,0.04)' : C.creamElev,
-        padding: '20px 24px',
-      }}
-    >
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="font-display font-normal text-[1.15rem] tracking-[-0.02em]" style={{ color: C.navy }}>
-            {product.name}
-          </p>
-          <p className="font-mono text-[10px] uppercase tracking-[0.12em] mt-1" style={{ color: C.hueso }}>
-            {product.tagline}
-          </p>
-        </div>
-        <div
-          className="shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 transition-all"
+    <div style={{ display: 'inline-flex', background: C.creamDeep, borderRadius: 999, padding: 3, gap: 2 }}>
+      {PRODUCTS.map(p => (
+        <button
+          key={p.id}
+          onClick={() => onChange(p.id)}
           style={{
-            borderColor: selected ? C.ocean : C.creamBorderStrong,
-            background: selected ? C.ocean : 'transparent',
+            padding: '7px 18px', borderRadius: 999, fontSize: 13, cursor: 'pointer', border: 'none',
+            fontWeight: value === p.id ? 500 : 400,
+            background: value === p.id ? C.creamElev : 'transparent',
+            color: value === p.id ? C.navy : C.hueso,
+            boxShadow: value === p.id ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
+            transition: 'all 0.15s',
           }}
         >
-          {selected && <Check size={11} color="white" strokeWidth={3} />}
-        </div>
-      </div>
-
-      <ul className="mt-4 flex flex-col gap-1.5">
-        {product.includes.map((item) => (
-          <li key={item} className="flex items-start gap-2">
-            <div className="w-1 h-1 rounded-full mt-[7px] shrink-0" style={{ background: C.ocean }} />
-            <span className="text-[13px] leading-snug" style={{ color: `${C.navy}cc` }}>{item}</span>
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-4 pt-4" style={{ borderTop: `1px solid ${selected ? 'rgba(30,91,160,0.2)' : C.creamBorder}` }}>
-        <span className="font-display font-light text-[1.75rem] tracking-[-0.03em]" style={{ color: C.navy }}>
-          {formatPrice(product.basePrice)}
-        </span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.1em] ml-2" style={{ color: C.hueso }}>
-          individual
-        </span>
-      </div>
-    </button>
+          {p.label}
+        </button>
+      ))}
+    </div>
   )
 }
 
-// ── Modality card ─────────────────────────────────────────────────────────────
+// ── Comparison table — desktop ─────────────────────────────────────────────────
 
-function ModalityCard({ modality, basePrice }: { modality: Modality; basePrice: number }) {
-  const price = calcPrice(basePrice, modality.discountPct)
-  const isGroup = modality.discountPct > 0
+function DesktopTable({ basePrice, features }: { basePrice: number; features: string[] }) {
+  const COL = 'grid-cols-[200px_1fr_1fr_1fr]'
+  const rowBase = `grid ${COL} border-t`
+  const borderColor = `border-[var(--border-cream)]`
+  const cell = 'px-6 py-5 flex flex-col items-center justify-center text-center'
+  const labelCell = 'px-0 py-5 flex items-center'
 
   return (
-    <div
-      className="relative rounded-2xl overflow-hidden flex flex-col"
-      style={{
-        background: modality.highlight ? C.ocean : C.creamElev,
-        border: modality.highlight ? 'none' : `1px solid ${C.creamBorder}`,
-        boxShadow: modality.highlight ? '0 16px 48px rgba(30,91,160,0.22)' : undefined,
-      }}
-    >
-      {modality.highlight && (
-        <div className="flex justify-center pt-4">
-          <span className="font-mono text-[10px] uppercase tracking-[0.14em] px-3 py-1 rounded-full" style={{ background: C.terra, color: C.creamElev }}>
-            Mejor valor
-          </span>
-        </div>
-      )}
+    <div className={`w-full hidden sm:block rounded-2xl overflow-hidden border ${borderColor}`} style={{ background: C.creamElev }}>
 
-      <div className="px-6 pt-5 pb-2">
-        <p className="font-display font-normal text-[1.2rem] tracking-[-0.02em] mb-0.5" style={{ color: modality.highlight ? C.creamElev : C.navy }}>
-          {modality.name}
-        </p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.1em]" style={{ color: modality.highlight ? 'rgba(251,245,234,0.55)' : C.hueso }}>
-          {modality.size}
-        </p>
-        <div className="flex items-baseline gap-1.5 mt-3">
-          <span className="font-display font-light tracking-[-0.03em]" style={{ fontSize: '2rem', color: modality.highlight ? C.creamElev : C.navy }}>
-            {formatPrice(price)}
-          </span>
-          {isGroup && (
-            <span className="font-mono text-[11px] uppercase tracking-[0.1em]" style={{ color: modality.highlight ? 'rgba(251,245,234,0.6)' : C.hueso }}>
-              c/u
-            </span>
-          )}
-        </div>
-        {modality.discountPct > 0 && (
-          <span
-            className="inline-block font-mono text-[11px] font-semibold px-2 py-0.5 rounded-full mt-1.5"
-            style={{
-              background: modality.highlight ? 'rgba(255,255,255,0.15)' : 'rgba(30,91,160,0.1)',
-              color: modality.highlight ? C.creamElev : C.ocean,
-            }}
+      {/* Column headers */}
+      <div className={`grid ${COL}`}>
+        <div /> {/* label spacer */}
+        {MODALITIES.map(m => (
+          <div
+            key={m.id}
+            className="px-6 pt-7 pb-5 flex flex-col items-center text-center"
+            style={{ background: m.highlight ? C.ocean : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}
           >
-            {modality.discountPct}% off
-          </span>
-        )}
+            {m.highlight && (
+              <span className="font-mono text-[10px] uppercase tracking-[0.14em] px-3 py-1 rounded-full mb-3" style={{ background: C.terra, color: C.creamElev }}>
+                Mejor valor
+              </span>
+            )}
+            <p className="font-display font-normal text-[1.3rem] tracking-[-0.02em]" style={{ color: m.highlight ? C.creamElev : C.navy }}>
+              {m.name}
+            </p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.1em] mt-1" style={{ color: m.highlight ? 'rgba(251,245,234,0.55)' : C.hueso }}>
+              {m.size}
+            </p>
+          </div>
+        ))}
       </div>
 
-      <div className="flex-1" />
+      {/* Price row */}
+      <div className={`${rowBase} ${borderColor}`}>
+        <div className={labelCell}>
+          <span className="font-mono text-[11px] uppercase tracking-[0.14em]" style={{ color: C.hueso }}>Precio</span>
+        </div>
+        {MODALITIES.map(m => {
+          const price = calcPrice(basePrice, m.discountPct)
+          return (
+            <div key={m.id} className={cell} style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
+              <span className="font-display font-light tracking-[-0.035em]" style={{ fontSize: '1.75rem', color: C.navy }}>
+                {formatPrice(price)}
+              </span>
+              {m.discountPct > 0 && (
+                <span className="font-mono text-[10px] uppercase tracking-[0.1em] mt-0.5" style={{ color: C.hueso }}>c/u</span>
+              )}
+              {m.discountPct > 0 && (
+                <span className="font-mono text-[11px] font-semibold px-2 py-0.5 rounded-full mt-2" style={{ background: 'rgba(30,91,160,0.1)', color: C.ocean }}>
+                  {m.discountPct}% off
+                </span>
+              )}
+            </div>
+          )
+        })}
+      </div>
 
-      <div className="px-6 pb-6 pt-3">
-        <a
-          href={PRODUCT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`group w-full flex items-center justify-center gap-2 py-3 rounded-full font-medium text-[14px] transition-all cursor-pointer ${
-            modality.highlight
-              ? 'bg-[var(--cream-elev)] text-[var(--ocean)] hover:bg-white'
-              : 'bg-[var(--ocean)] text-[var(--cream-elev)] hover:bg-[var(--ocean-deep)]'
-          }`}
-        >
-          Empezar
-          <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-        </a>
+      {/* Feature rows */}
+      {features.map(feat => (
+        <div key={feat} className={`${rowBase} ${borderColor}`}>
+          <div className={labelCell}>
+            <span className="text-[13px] leading-snug" style={{ color: `${C.navy}bb` }}>{feat}</span>
+          </div>
+          {MODALITIES.map(m => (
+            <div key={m.id} className={cell} style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
+              <Check size={16} style={{ color: C.ocean }} strokeWidth={2.5} />
+            </div>
+          ))}
+        </div>
+      ))}
+
+      {/* CTA row */}
+      <div className={`${rowBase} ${borderColor}`}>
+        <div />
+        {MODALITIES.map(m => (
+          <div key={m.id} className="px-6 py-5" style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
+            <a
+              href={PRODUCT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group w-full flex items-center justify-center gap-2 py-2.5 rounded-full font-medium text-[13px] transition-all cursor-pointer ${
+                m.highlight
+                  ? 'bg-[var(--ocean)] text-[var(--cream-elev)] hover:bg-[var(--ocean-deep)]'
+                  : 'border border-[var(--border-cream-strong)] text-[var(--navy)] hover:border-[var(--ocean)] hover:text-[var(--ocean)]'
+              }`}
+            >
+              Empezar
+              <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+            </a>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
-// ── Main export ───────────────────────────────────────────────────────────────
+// ── Comparison cards — mobile ──────────────────────────────────────────────────
+
+function MobileCards({ basePrice }: { basePrice: number }) {
+  return (
+    <div className="sm:hidden flex flex-col gap-4">
+      {MODALITIES.map(m => {
+        const price = calcPrice(basePrice, m.discountPct)
+        return (
+          <div
+            key={m.id}
+            className="relative rounded-2xl overflow-hidden"
+            style={{
+              background: m.highlight ? C.ocean : C.creamElev,
+              border: m.highlight ? 'none' : `1px solid ${C.creamBorder}`,
+              boxShadow: m.highlight ? '0 12px 40px rgba(30,91,160,0.22)' : undefined,
+            }}
+          >
+            {m.highlight && (
+              <div className="flex justify-center pt-4">
+                <span className="font-mono text-[10px] uppercase tracking-[0.14em] px-3 py-1 rounded-full" style={{ background: C.terra, color: C.creamElev }}>
+                  Mejor valor
+                </span>
+              </div>
+            )}
+            <div className="px-6 pt-5 pb-5">
+              <p className="font-display font-normal text-[1.2rem] tracking-[-0.02em]" style={{ color: m.highlight ? C.creamElev : C.navy }}>
+                {m.name}
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.1em] mt-0.5" style={{ color: m.highlight ? 'rgba(251,245,234,0.55)' : C.hueso }}>
+                {m.size}
+              </p>
+              <div className="flex items-baseline gap-1.5 mt-3">
+                <span className="font-display font-light text-[2rem] tracking-[-0.03em]" style={{ color: m.highlight ? C.creamElev : C.navy }}>
+                  {formatPrice(price)}
+                </span>
+                {m.discountPct > 0 && (
+                  <span className="font-mono text-[11px] uppercase tracking-[0.1em]" style={{ color: m.highlight ? 'rgba(251,245,234,0.6)' : C.hueso }}>c/u</span>
+                )}
+              </div>
+              {m.discountPct > 0 && (
+                <span className="inline-block font-mono text-[11px] font-semibold px-2 py-0.5 rounded-full mt-1.5" style={{ background: m.highlight ? 'rgba(255,255,255,0.15)' : 'rgba(30,91,160,0.1)', color: m.highlight ? C.creamElev : C.ocean }}>
+                  {m.discountPct}% off
+                </span>
+              )}
+              <a
+                href={PRODUCT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group mt-5 w-full flex items-center justify-center gap-2 py-3 rounded-full font-medium text-[14px] transition-all cursor-pointer ${
+                  m.highlight
+                    ? 'bg-[var(--cream-elev)] text-[var(--ocean)] hover:bg-white'
+                    : 'bg-[var(--ocean)] text-[var(--cream-elev)] hover:bg-[var(--ocean-deep)]'
+                }`}
+              >
+                Empezar
+                <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+              </a>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+// ── Main export ────────────────────────────────────────────────────────────────
 
 export function PricingSection({ onBack: _onBack }: Props) {
-  const [selectedProduct, setSelectedProduct] = useState<ProductId | null>(null)
+  const [product, setProduct] = useState<ProductId>('timon')
   const block = useInView<HTMLDivElement>()
 
-  const currentProduct = PRODUCTS.find(p => p.id === selectedProduct) ?? null
+  const currentProduct = PRODUCTS.find(p => p.id === product)!
+  const features = product === 'timon_psico' ? [...BASE_FEATURES, PSICO_FEATURE] : BASE_FEATURES
 
   return (
     <div className="animate-fade-in bg-[var(--cream)]">
-      <section
-        className="relative overflow-hidden min-h-screen flex flex-col justify-center"
-        style={{ marginTop: '-4rem', paddingTop: '4rem' }}
-      >
+      <section className="relative overflow-hidden min-h-screen flex flex-col justify-center" style={{ marginTop: '-4rem', paddingTop: '4rem' }}>
         <div className="mesh-stage" aria-hidden>
           <div className="mesh-blob mesh-blob--ocean-a" />
           <div className="mesh-blob mesh-blob--terra" />
@@ -244,53 +256,30 @@ export function PricingSection({ onBack: _onBack }: Props) {
 
         <div className="relative w-full px-5 sm:px-8 lg:px-12 xl:px-[5vw] 2xl:px-[6vw] py-16 sm:py-20 z-10">
           <div ref={block.ref} className={`reveal ${block.inView ? 'is-visible' : ''}`}>
+
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--hueso)] mb-8 inline-flex items-center gap-3">
               <span className="w-8 h-px bg-[var(--terra)]/60" />
               Planes y precios
             </p>
             <h1
-              className="font-display font-light text-[var(--navy)] mb-12"
+              className="font-display font-light text-[var(--navy)] mb-10"
               style={{ fontSize: 'clamp(2rem, 4vw, 4rem)', lineHeight: 0.98, letterSpacing: '-0.04em' }}
             >
               El recorrido es 100% individual.{' '}
-              <span className="text-[var(--ocean)] font-normal">
-                El descuento es grupal.
-              </span>
+              <span className="text-[var(--ocean)] font-normal">El descuento es grupal.</span>
             </h1>
 
-            {/* Step 1 — product */}
-            <div className="mb-10">
-              <StepLabel n={1} text="Elegí el producto" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {PRODUCTS.map(product => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    selected={selectedProduct === product.id}
-                    onSelect={() => setSelectedProduct(product.id)}
-                  />
-                ))}
-              </div>
+            <div className="mb-8">
+              <ProductToggle value={product} onChange={setProduct} />
             </div>
 
-            {/* Step 2 — modality (only after product selected) */}
-            {currentProduct && (
-              <div className="animate-fade-in">
-                <StepLabel n={2} text="Elegí la modalidad" />
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {MODALITIES.map(modality => (
-                    <ModalityCard
-                      key={modality.id}
-                      modality={modality}
-                      basePrice={currentProduct.basePrice}
-                    />
-                  ))}
-                </div>
-                <p className="mt-5 text-[12px] leading-[1.55]" style={{ color: C.hueso, maxWidth: 520 }}>
-                  En grupos, cada persona puede elegir un producto distinto. El descuento se aplica sobre el producto que cada uno eligió.
-                </p>
-              </div>
-            )}
+            <MobileCards basePrice={currentProduct.basePrice} />
+            <DesktopTable basePrice={currentProduct.basePrice} features={features} />
+
+            <p className="mt-5 text-[12px] leading-[1.55]" style={{ color: C.hueso, maxWidth: 520 }}>
+              En grupos, cada persona puede elegir un producto distinto. El descuento se aplica sobre el producto que cada uno eligió.
+            </p>
+
           </div>
         </div>
       </section>
