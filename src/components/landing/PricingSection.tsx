@@ -261,7 +261,7 @@ export function PricingSection({ onBack: _onBack }: Props) {
             {/* Step 1 — product */}
             <div className="mb-10">
               <StepLabel n={1} text="Elegí el producto" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[760px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {PRODUCTS.map(product => (
                   <ProductCard
                     key={product.id}
@@ -277,7 +277,7 @@ export function PricingSection({ onBack: _onBack }: Props) {
             {currentProduct && (
               <div className="animate-fade-in">
                 <StepLabel n={2} text="Elegí la modalidad" />
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[760px]">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {MODALITIES.map(modality => (
                     <ModalityCard
                       key={modality.id}
