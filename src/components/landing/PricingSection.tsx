@@ -23,8 +23,8 @@ const PSICO_ADDON_PRICE = 80000
 
 const MODALITIES = [
   { id: 'individual', name: 'Individual', size: '1 persona',     discountPct: 0,  discountNote: '',                   highlight: false },
-  { id: 'grupito',   name: 'Grupito',    size: '2 – 3 personas', discountPct: 10, discountNote: 'Ahorrás 10% c/u',    highlight: false },
-  { id: 'amigos',    name: 'Amigos',     size: '4 personas',     discountPct: 25, discountNote: 'Ahorrás 25% c/u',    highlight: true  },
+  { id: 'grupito',   name: 'Grupito',    size: '2 – 3 personas', discountPct: 10, discountNote: 'Si invitás 2 o 3 amigos tenés 10% off', highlight: false },
+  { id: 'amigos',    name: 'Amigos',     size: '4 personas',     discountPct: 25, discountNote: 'Si invitás 4 amigos tenés 25% off',       highlight: true  },
 ]
 
 const BASE_FEATURES = [
@@ -45,7 +45,7 @@ function calcPrice(base: number, pct: number): number {
 // ── Desktop table ──────────────────────────────────────────────────────────────
 
 function DesktopTable() {
-  const COL = 'grid-cols-[180px_1fr_1fr_1fr]'
+  const COL = 'grid-cols-[200px_1fr_1fr_1fr]'
   const cellBase = 'px-6 py-5 flex flex-col items-center justify-center text-center'
 
   return (
@@ -75,15 +75,12 @@ function DesktopTable() {
               {m.size}
             </p>
             {m.discountNote && (
-              <span
-                className="font-mono text-[10px] font-semibold px-2 py-0.5 rounded-full mt-2"
-                style={{
-                  background: m.highlight ? 'rgba(255,255,255,0.18)' : 'rgba(30,91,160,0.1)',
-                  color: m.highlight ? C.creamElev : C.ocean,
-                }}
+              <p
+                className="text-[11px] leading-snug mt-2 max-w-[160px]"
+                style={{ color: m.highlight ? 'rgba(251,245,234,0.75)' : C.ocean }}
               >
                 {m.discountNote}
-              </span>
+              </p>
             )}
           </div>
         ))}
@@ -110,7 +107,7 @@ function DesktopTable() {
       {BASE_FEATURES.map(feat => (
         <div key={feat} className={`grid ${COL} border-t border-[var(--border-cream)]`}>
           <div className="px-0 py-5 flex items-center pr-4">
-            <span className="text-[13px] leading-snug" style={{ color: `${C.navy}bb` }}>{feat}</span>
+            <span className="text-[13px] leading-snug" style={{ color: C.navy }}>{feat}</span>
           </div>
           {MODALITIES.map(m => (
             <div key={m.id} className={cellBase} style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
@@ -123,23 +120,26 @@ function DesktopTable() {
       {/* Add-on row — psicopedagogo */}
       <div className={`grid ${COL} border-t`} style={{ borderColor: C.creamBorderStrong, borderTopStyle: 'dashed', background: 'rgba(30,91,160,0.015)' }}>
         <div className="px-0 py-5 flex flex-col justify-center pr-4">
-          <span className="text-[13px] leading-snug" style={{ color: `${C.navy}bb` }}>
+          <span className="text-[13px] leading-snug" style={{ color: C.navy }}>
             Reunión con profesional para revisar tu resultado en conjunto
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] mt-1" style={{ color: C.hueso }}>Opcional</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] mt-1" style={{ color: C.hueso }}>Opcional · + $80.000</span>
         </div>
         {MODALITIES.map(m => (
           <div key={m.id} className={cellBase} style={{ background: m.highlight ? 'rgba(30,91,160,0.04)' : 'transparent', borderLeft: `1px solid ${C.creamBorder}` }}>
-            <a
-              href={PRODUCT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-mono text-[11px] px-3 py-1.5 rounded-full transition-all cursor-pointer hover:bg-[var(--ocean)] hover:text-[var(--cream-elev)]"
-              style={{ border: `1px solid ${C.ocean}`, color: C.ocean }}
-            >
-              <Plus size={10} strokeWidth={2.5} />
-              Agregar · {formatPrice(PSICO_ADDON_PRICE)}
-            </a>
+            <div className="flex flex-col items-center gap-1">
+              <a
+                href={PRODUCT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-mono text-[11px] px-3 py-1.5 rounded-full transition-all cursor-pointer hover:bg-[var(--ocean)] hover:text-[var(--cream-elev)]"
+                style={{ border: `1px solid ${C.ocean}`, color: C.ocean }}
+              >
+                <Plus size={10} strokeWidth={2.5} />
+                Agregar
+              </a>
+              <span className="text-[10px]" style={{ color: C.hueso }}>+ {formatPrice(PSICO_ADDON_PRICE)} de recargo</span>
+            </div>
           </div>
         ))}
       </div>
