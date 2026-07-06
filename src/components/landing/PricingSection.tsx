@@ -49,11 +49,13 @@ function DesktopTable() {
   const cellBase = 'px-6 py-5 flex flex-col items-center justify-center text-center'
 
   return (
-    <div className={`w-full hidden sm:block rounded-2xl overflow-hidden border border-[var(--border-cream)]`} style={{ background: C.creamElev }}>
+    <div className={`w-full hidden lg:block rounded-2xl overflow-hidden border border-[var(--border-cream)]`} style={{ background: C.creamElev }}>
 
       {/* Column headers */}
       <div className={`grid ${COL}`}>
-        <div />
+        <div className="px-0 pt-7 pb-5 flex items-end">
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em]" style={{ color: C.hueso }}>Funcionalidades</span>
+        </div>
         {MODALITIES.map(m => (
           <div
             key={m.id}
@@ -88,7 +90,7 @@ function DesktopTable() {
 
       {/* Price row */}
       <div className={`grid ${COL} border-t border-[var(--border-cream)]`}>
-        <div className="px-0 py-5 flex items-center">
+        <div className="pl-2 py-5 flex items-center">
           <span className="font-mono text-[11px] uppercase tracking-[0.14em]" style={{ color: C.hueso }}>Precio</span>
         </div>
         {MODALITIES.map(m => (
@@ -106,7 +108,7 @@ function DesktopTable() {
       {/* Feature rows */}
       {BASE_FEATURES.map(feat => (
         <div key={feat} className={`grid ${COL} border-t border-[var(--border-cream)]`}>
-          <div className="px-0 py-5 flex items-center pr-4">
+          <div className="pl-2 py-5 flex items-center pr-4">
             <span className="text-[13px] leading-snug" style={{ color: C.navy }}>{feat}</span>
           </div>
           {MODALITIES.map(m => (
@@ -119,7 +121,7 @@ function DesktopTable() {
 
       {/* Add-on row — psicopedagogo */}
       <div className={`grid ${COL} border-t`} style={{ borderColor: C.creamBorderStrong, borderTopStyle: 'dashed', background: 'rgba(30,91,160,0.015)' }}>
-        <div className="px-0 py-5 flex flex-col justify-center pr-4">
+        <div className="pl-2 py-5 flex flex-col justify-center pr-4">
           <span className="text-[13px] leading-snug" style={{ color: C.navy }}>
             Reunión con profesional para revisar tu resultado en conjunto
           </span>
@@ -174,7 +176,7 @@ function DesktopTable() {
 
 function MobileCards() {
   return (
-    <div className="sm:hidden flex flex-col gap-4">
+    <div className="lg:hidden flex flex-col gap-4">
       {MODALITIES.map(m => {
         const price = calcPrice(BASE_PRICE, m.discountPct)
         return (
