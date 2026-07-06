@@ -3,6 +3,8 @@
 import { Logo } from './Logo'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
+const APP_URL = 'https://app.timon.com.ar'
+
 type Audience = 'universal' | 'colegios' | 'pricing'
 
 type Props = {
@@ -55,6 +57,14 @@ export function Navbar({ audience, onLogoClick, onSwitchAudience, onBack }: Prop
               Para colegios
             </button>
           )}
+          <a
+            href={APP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center px-4 py-[7px] rounded-full text-[12px] font-medium whitespace-nowrap cursor-pointer border border-[var(--border-cream-strong)] text-[var(--navy)] hover:border-[var(--navy)] transition-all"
+          >
+            Iniciar sesión
+          </a>
           {!isColegios && !isPricing && (
             <button
               onClick={() => onSwitchAudience('pricing')}
